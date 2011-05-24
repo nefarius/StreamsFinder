@@ -52,10 +52,8 @@ namespace CNRService.StreamsFinder
 		private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn2;
 		private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn3;
 		private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn4;
-		private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn5;
-		private System.Windows.Forms.LinkLabel linkLabelRemoveStreams;
-		private System.Windows.Forms.Splitter splitter1;
-		private System.Windows.Forms.LinkLabel linkLabelSelectAll;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn5;
+        private System.Windows.Forms.Splitter splitter1;
 
 		private Thread SearchThread;
 		private System.Windows.Forms.Timer timerGrid;
@@ -71,6 +69,8 @@ namespace CNRService.StreamsFinder
 
 		private ArrayList ArrayFileInfo;
 		private System.Windows.Forms.CheckBox checkBoxSubFolders;
+        private Button buttonSelectAll;
+        private Button buttonRemoveSelected;
 		private int lastIndexAdded = 0;
 
 		public FindForm()
@@ -109,9 +109,8 @@ namespace CNRService.StreamsFinder
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindForm));
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonSelectAll = new System.Windows.Forms.Button();
             this.checkBoxSubFolders = new System.Windows.Forms.CheckBox();
-            this.linkLabelSelectAll = new System.Windows.Forms.LinkLabel();
-            this.linkLabelRemoveStreams = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.buttonFind = new System.Windows.Forms.Button();
@@ -126,6 +125,7 @@ namespace CNRService.StreamsFinder
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.timerGrid = new System.Windows.Forms.Timer(this.components);
+            this.buttonRemoveSelected = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).BeginInit();
@@ -142,9 +142,9 @@ namespace CNRService.StreamsFinder
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel1.Controls.Add(this.buttonRemoveSelected);
+            this.panel1.Controls.Add(this.buttonSelectAll);
             this.panel1.Controls.Add(this.checkBoxSubFolders);
-            this.panel1.Controls.Add(this.linkLabelSelectAll);
-            this.panel1.Controls.Add(this.linkLabelRemoveStreams);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.buttonBrowse);
             this.panel1.Controls.Add(this.buttonFind);
@@ -155,37 +155,23 @@ namespace CNRService.StreamsFinder
             this.panel1.Size = new System.Drawing.Size(792, 112);
             this.panel1.TabIndex = 1;
             // 
+            // buttonSelectAll
+            // 
+            this.buttonSelectAll.Location = new System.Drawing.Point(97, 64);
+            this.buttonSelectAll.Name = "buttonSelectAll";
+            this.buttonSelectAll.Size = new System.Drawing.Size(104, 23);
+            this.buttonSelectAll.TabIndex = 7;
+            this.buttonSelectAll.Text = "Select all streams";
+            this.buttonSelectAll.UseVisualStyleBackColor = true;
+            this.buttonSelectAll.Click += new System.EventHandler(this.buttonSelectAll_Click);
+            // 
             // checkBoxSubFolders
             // 
-            this.checkBoxSubFolders.Location = new System.Drawing.Point(528, 32);
+            this.checkBoxSubFolders.Location = new System.Drawing.Point(511, 30);
             this.checkBoxSubFolders.Name = "checkBoxSubFolders";
             this.checkBoxSubFolders.Size = new System.Drawing.Size(128, 24);
             this.checkBoxSubFolders.TabIndex = 6;
-            this.checkBoxSubFolders.Text = "search subfolders";
-            // 
-            // linkLabelSelectAll
-            // 
-            this.linkLabelSelectAll.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.linkLabelSelectAll.LinkColor = System.Drawing.Color.Khaki;
-            this.linkLabelSelectAll.Location = new System.Drawing.Point(104, 64);
-            this.linkLabelSelectAll.Name = "linkLabelSelectAll";
-            this.linkLabelSelectAll.Size = new System.Drawing.Size(112, 23);
-            this.linkLabelSelectAll.TabIndex = 5;
-            this.linkLabelSelectAll.TabStop = true;
-            this.linkLabelSelectAll.Text = "Selected All Streams";
-            this.linkLabelSelectAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectAll_LinkClicked);
-            // 
-            // linkLabelRemoveStreams
-            // 
-            this.linkLabelRemoveStreams.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.linkLabelRemoveStreams.LinkColor = System.Drawing.Color.Gold;
-            this.linkLabelRemoveStreams.Location = new System.Drawing.Point(216, 64);
-            this.linkLabelRemoveStreams.Name = "linkLabelRemoveStreams";
-            this.linkLabelRemoveStreams.Size = new System.Drawing.Size(144, 23);
-            this.linkLabelRemoveStreams.TabIndex = 4;
-            this.linkLabelRemoveStreams.TabStop = true;
-            this.linkLabelRemoveStreams.Text = "Remove Selected Streams";
-            this.linkLabelRemoveStreams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelRemoveStreams_LinkClicked);
+            this.checkBoxSubFolders.Text = "scan subfolders?";
             // 
             // label1
             // 
@@ -194,17 +180,17 @@ namespace CNRService.StreamsFinder
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(144, 16);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Select StartUp Folder:";
+            this.label1.Text = "Select start-up folder:";
             // 
             // buttonBrowse
             // 
             this.buttonBrowse.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonBrowse.Location = new System.Drawing.Point(440, 32);
+            this.buttonBrowse.Location = new System.Drawing.Point(430, 30);
             this.buttonBrowse.Name = "buttonBrowse";
             this.buttonBrowse.Size = new System.Drawing.Size(75, 23);
             this.buttonBrowse.TabIndex = 2;
-            this.buttonBrowse.Text = "Browse";
-            this.buttonBrowse.UseVisualStyleBackColor = false;
+            this.buttonBrowse.Text = "Browse...";
+            this.buttonBrowse.UseVisualStyleBackColor = true;
             this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
             // 
             // buttonFind
@@ -215,7 +201,7 @@ namespace CNRService.StreamsFinder
             this.buttonFind.Size = new System.Drawing.Size(75, 23);
             this.buttonFind.TabIndex = 1;
             this.buttonFind.Text = "Start search";
-            this.buttonFind.UseVisualStyleBackColor = false;
+            this.buttonFind.UseVisualStyleBackColor = true;
             this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
             // 
             // dataGridResult
@@ -307,6 +293,16 @@ namespace CNRService.StreamsFinder
             this.timerGrid.Enabled = true;
             this.timerGrid.Interval = 300;
             this.timerGrid.Tick += new System.EventHandler(this.timerGrid_Tick);
+            // 
+            // buttonRemoveSelected
+            // 
+            this.buttonRemoveSelected.Location = new System.Drawing.Point(207, 64);
+            this.buttonRemoveSelected.Name = "buttonRemoveSelected";
+            this.buttonRemoveSelected.Size = new System.Drawing.Size(153, 23);
+            this.buttonRemoveSelected.TabIndex = 8;
+            this.buttonRemoveSelected.Text = "Remove selected streams...";
+            this.buttonRemoveSelected.UseVisualStyleBackColor = true;
+            this.buttonRemoveSelected.Click += new System.EventHandler(this.buttonRemoveSelected_Click);
             // 
             // FindForm
             // 
@@ -449,8 +445,6 @@ namespace CNRService.StreamsFinder
                     
 				}
 			}
-			
-			
 		}
 
 		public ArrayList GetSelectedRows(DataGrid dg) 
@@ -472,26 +466,6 @@ namespace CNRService.StreamsFinder
 		{
 			if (this.folderBrowserDialog1.ShowDialog() == DialogResult.OK)
 				this.textBoxFind.Text = this.folderBrowserDialog1.SelectedPath;
-		}
-
-
-		private void linkLabelRemoveStreams_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-		{
-			string msg = "Do you want to delete the selected Streams?";
-
-			if (MessageBox.Show(msg, "Delete Streams", MessageBoxButtons.YesNo) == DialogResult.Yes)
-				RemoveSelectedStreams();
-		}
-
-		private void linkLabelSelectAll_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-		{
-			CurrencyManager cm = (CurrencyManager)this.BindingContext[dataGridResult.DataSource, dataGridResult.DataMember]; 
- 
-			DataView dv = (DataView)cm.List; 
-			for(int i = 0; i < dv.Count; ++i) 
-			{ 
-				dataGridResult.Select(i);
-			}
 		}
 
 		private void timerGrid_Tick(object sender, System.EventArgs e)
@@ -518,5 +492,24 @@ namespace CNRService.StreamsFinder
 			lastIndexAdded = cnt;
 			this.timerGrid.Enabled = true;
 		}
+
+        private void buttonSelectAll_Click(object sender, EventArgs e)
+        {
+            CurrencyManager cm = (CurrencyManager)this.BindingContext[dataGridResult.DataSource, dataGridResult.DataMember];
+
+            DataView dv = (DataView)cm.List;
+            for (int i = 0; i < dv.Count; ++i)
+            {
+                dataGridResult.Select(i);
+            }
+        }
+
+        private void buttonRemoveSelected_Click(object sender, EventArgs e)
+        {
+            string msg = "Do you want to delete the selected Streams?";
+
+            if (MessageBox.Show(msg, "Delete Streams", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                RemoveSelectedStreams();
+        }
 	}
 }
