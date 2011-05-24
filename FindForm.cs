@@ -105,217 +105,225 @@ namespace CNRService.StreamsFinder
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.textBoxFind = new System.Windows.Forms.TextBox();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.linkLabelSelectAll = new System.Windows.Forms.LinkLabel();
-			this.linkLabelRemoveStreams = new System.Windows.Forms.LinkLabel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.buttonBrowse = new System.Windows.Forms.Button();
-			this.buttonFind = new System.Windows.Forms.Button();
-			this.dataGridResult = new System.Windows.Forms.DataGrid();
-			this.fileInfoData1 = new CNRService.StreamsFinder.FileInfoData();
-			this.dataGridTableStyle1 = new System.Windows.Forms.DataGridTableStyle();
-			this.dataGridTextBoxColumn1 = new System.Windows.Forms.DataGridTextBoxColumn();
-			this.dataGridTextBoxColumn2 = new System.Windows.Forms.DataGridTextBoxColumn();
-			this.dataGridTextBoxColumn3 = new System.Windows.Forms.DataGridTextBoxColumn();
-			this.dataGridTextBoxColumn4 = new System.Windows.Forms.DataGridTextBoxColumn();
-			this.dataGridTextBoxColumn5 = new System.Windows.Forms.DataGridTextBoxColumn();
-			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-			this.splitter1 = new System.Windows.Forms.Splitter();
-			this.timerGrid = new System.Windows.Forms.Timer(this.components);
-			this.checkBoxSubFolders = new System.Windows.Forms.CheckBox();
-			this.panel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// textBoxFind
-			// 
-			this.textBoxFind.Location = new System.Drawing.Point(16, 32);
-			this.textBoxFind.Name = "textBoxFind";
-			this.textBoxFind.Size = new System.Drawing.Size(408, 20);
-			this.textBoxFind.TabIndex = 0;
-			this.textBoxFind.Text = "C:\\";
-			// 
-			// panel1
-			// 
-			this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
-			this.panel1.Controls.Add(this.checkBoxSubFolders);
-			this.panel1.Controls.Add(this.linkLabelSelectAll);
-			this.panel1.Controls.Add(this.linkLabelRemoveStreams);
-			this.panel1.Controls.Add(this.label1);
-			this.panel1.Controls.Add(this.buttonBrowse);
-			this.panel1.Controls.Add(this.buttonFind);
-			this.panel1.Controls.Add(this.textBoxFind);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(792, 112);
-			this.panel1.TabIndex = 1;
-			// 
-			// linkLabelSelectAll
-			// 
-			this.linkLabelSelectAll.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.linkLabelSelectAll.LinkColor = System.Drawing.Color.Khaki;
-			this.linkLabelSelectAll.Location = new System.Drawing.Point(104, 64);
-			this.linkLabelSelectAll.Name = "linkLabelSelectAll";
-			this.linkLabelSelectAll.Size = new System.Drawing.Size(112, 23);
-			this.linkLabelSelectAll.TabIndex = 5;
-			this.linkLabelSelectAll.TabStop = true;
-			this.linkLabelSelectAll.Text = "Selected All Streams";
-			this.linkLabelSelectAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectAll_LinkClicked);
-			// 
-			// linkLabelRemoveStreams
-			// 
-			this.linkLabelRemoveStreams.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.linkLabelRemoveStreams.LinkColor = System.Drawing.Color.Gold;
-			this.linkLabelRemoveStreams.Location = new System.Drawing.Point(216, 64);
-			this.linkLabelRemoveStreams.Name = "linkLabelRemoveStreams";
-			this.linkLabelRemoveStreams.Size = new System.Drawing.Size(144, 23);
-			this.linkLabelRemoveStreams.TabIndex = 4;
-			this.linkLabelRemoveStreams.TabStop = true;
-			this.linkLabelRemoveStreams.Text = "Remove Selected Streams";
-			this.linkLabelRemoveStreams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelRemoveStreams_LinkClicked);
-			// 
-			// label1
-			// 
-			this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-			this.label1.Location = new System.Drawing.Point(16, 8);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(144, 16);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "Select StartUp Folder:";
-			// 
-			// buttonBrowse
-			// 
-			this.buttonBrowse.BackColor = System.Drawing.SystemColors.Control;
-			this.buttonBrowse.Location = new System.Drawing.Point(440, 32);
-			this.buttonBrowse.Name = "buttonBrowse";
-			this.buttonBrowse.TabIndex = 2;
-			this.buttonBrowse.Text = "Browse";
-			this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
-			// 
-			// buttonFind
-			// 
-			this.buttonFind.BackColor = System.Drawing.SystemColors.Control;
-			this.buttonFind.Location = new System.Drawing.Point(16, 64);
-			this.buttonFind.Name = "buttonFind";
-			this.buttonFind.TabIndex = 1;
-			this.buttonFind.Text = "Start search";
-			this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
-			// 
-			// dataGridResult
-			// 
-			this.dataGridResult.CaptionBackColor = System.Drawing.Color.CornflowerBlue;
-			this.dataGridResult.CaptionText = "Files Found";
-			this.dataGridResult.CausesValidation = false;
-			this.dataGridResult.DataMember = "FileInfo";
-			this.dataGridResult.DataSource = this.fileInfoData1;
-			this.dataGridResult.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridResult.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-			this.dataGridResult.Location = new System.Drawing.Point(0, 112);
-			this.dataGridResult.Name = "dataGridResult";
-			this.dataGridResult.ReadOnly = true;
-			this.dataGridResult.Size = new System.Drawing.Size(792, 454);
-			this.dataGridResult.TabIndex = 2;
-			this.dataGridResult.TableStyles.AddRange(new System.Windows.Forms.DataGridTableStyle[] {
-																									   this.dataGridTableStyle1});
-			// 
-			// fileInfoData1
-			// 
-			this.fileInfoData1.DataSetName = "FileInfoData";
-			this.fileInfoData1.Locale = new System.Globalization.CultureInfo("en-US");
-			// 
-			// dataGridTableStyle1
-			// 
-			this.dataGridTableStyle1.DataGrid = this.dataGridResult;
-			this.dataGridTableStyle1.GridColumnStyles.AddRange(new System.Windows.Forms.DataGridColumnStyle[] {
-																												  this.dataGridTextBoxColumn1,
-																												  this.dataGridTextBoxColumn2,
-																												  this.dataGridTextBoxColumn3,
-																												  this.dataGridTextBoxColumn4,
-																												  this.dataGridTextBoxColumn5});
-			this.dataGridTableStyle1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-			this.dataGridTableStyle1.MappingName = "FileInfo";
-			// 
-			// dataGridTextBoxColumn1
-			// 
-			this.dataGridTextBoxColumn1.Format = "";
-			this.dataGridTextBoxColumn1.FormatInfo = null;
-			this.dataGridTextBoxColumn1.HeaderText = "File Name";
-			this.dataGridTextBoxColumn1.MappingName = "File Name";
-			this.dataGridTextBoxColumn1.Width = 200;
-			// 
-			// dataGridTextBoxColumn2
-			// 
-			this.dataGridTextBoxColumn2.Format = "";
-			this.dataGridTextBoxColumn2.FormatInfo = null;
-			this.dataGridTextBoxColumn2.HeaderText = "Stream";
-			this.dataGridTextBoxColumn2.MappingName = "Stream Name";
-			this.dataGridTextBoxColumn2.Width = 75;
-			// 
-			// dataGridTextBoxColumn3
-			// 
-			this.dataGridTextBoxColumn3.Format = "";
-			this.dataGridTextBoxColumn3.FormatInfo = null;
-			this.dataGridTextBoxColumn3.HeaderText = "Size (bytes)";
-			this.dataGridTextBoxColumn3.MappingName = "Stream Size";
-			this.dataGridTextBoxColumn3.Width = 75;
-			// 
-			// dataGridTextBoxColumn4
-			// 
-			this.dataGridTextBoxColumn4.Format = "";
-			this.dataGridTextBoxColumn4.FormatInfo = null;
-			this.dataGridTextBoxColumn4.HeaderText = "Location";
-			this.dataGridTextBoxColumn4.MappingName = "Location";
-			this.dataGridTextBoxColumn4.Width = 150;
-			// 
-			// dataGridTextBoxColumn5
-			// 
-			this.dataGridTextBoxColumn5.Format = "";
-			this.dataGridTextBoxColumn5.FormatInfo = null;
-			this.dataGridTextBoxColumn5.HeaderText = "Created";
-			this.dataGridTextBoxColumn5.MappingName = "Creation Date";
-			this.dataGridTextBoxColumn5.Width = 75;
-			// 
-			// splitter1
-			// 
-			this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.splitter1.Location = new System.Drawing.Point(0, 112);
-			this.splitter1.Name = "splitter1";
-			this.splitter1.Size = new System.Drawing.Size(792, 3);
-			this.splitter1.TabIndex = 3;
-			this.splitter1.TabStop = false;
-			// 
-			// timerGrid
-			// 
-			this.timerGrid.Enabled = true;
-			this.timerGrid.Interval = 300;
-			this.timerGrid.Tick += new System.EventHandler(this.timerGrid_Tick);
-			// 
-			// checkBoxSubFolders
-			// 
-			this.checkBoxSubFolders.Location = new System.Drawing.Point(528, 32);
-			this.checkBoxSubFolders.Name = "checkBoxSubFolders";
-			this.checkBoxSubFolders.Size = new System.Drawing.Size(128, 24);
-			this.checkBoxSubFolders.TabIndex = 6;
-			this.checkBoxSubFolders.Text = "search subfolders";
-			// 
-			// FindForm
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(792, 566);
-			this.Controls.Add(this.splitter1);
-			this.Controls.Add(this.dataGridResult);
-			this.Controls.Add(this.panel1);
-			this.Name = "FindForm";
-			this.Text = "Search for NTFS Streams";
-			this.Load += new System.EventHandler(this.FindForm_Load);
-			this.panel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).EndInit();
-			this.ResumeLayout(false);
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindForm));
+            this.textBoxFind = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.checkBoxSubFolders = new System.Windows.Forms.CheckBox();
+            this.linkLabelSelectAll = new System.Windows.Forms.LinkLabel();
+            this.linkLabelRemoveStreams = new System.Windows.Forms.LinkLabel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonBrowse = new System.Windows.Forms.Button();
+            this.buttonFind = new System.Windows.Forms.Button();
+            this.dataGridResult = new System.Windows.Forms.DataGrid();
+            this.fileInfoData1 = new CNRService.StreamsFinder.FileInfoData();
+            this.dataGridTableStyle1 = new System.Windows.Forms.DataGridTableStyle();
+            this.dataGridTextBoxColumn1 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn2 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn3 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn4 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn5 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.timerGrid = new System.Windows.Forms.Timer(this.components);
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // textBoxFind
+            // 
+            this.textBoxFind.Location = new System.Drawing.Point(16, 32);
+            this.textBoxFind.Name = "textBoxFind";
+            this.textBoxFind.Size = new System.Drawing.Size(408, 20);
+            this.textBoxFind.TabIndex = 0;
+            this.textBoxFind.Text = "C:\\";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel1.Controls.Add(this.checkBoxSubFolders);
+            this.panel1.Controls.Add(this.linkLabelSelectAll);
+            this.panel1.Controls.Add(this.linkLabelRemoveStreams);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.buttonBrowse);
+            this.panel1.Controls.Add(this.buttonFind);
+            this.panel1.Controls.Add(this.textBoxFind);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(792, 112);
+            this.panel1.TabIndex = 1;
+            // 
+            // checkBoxSubFolders
+            // 
+            this.checkBoxSubFolders.Location = new System.Drawing.Point(528, 32);
+            this.checkBoxSubFolders.Name = "checkBoxSubFolders";
+            this.checkBoxSubFolders.Size = new System.Drawing.Size(128, 24);
+            this.checkBoxSubFolders.TabIndex = 6;
+            this.checkBoxSubFolders.Text = "search subfolders";
+            // 
+            // linkLabelSelectAll
+            // 
+            this.linkLabelSelectAll.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.linkLabelSelectAll.LinkColor = System.Drawing.Color.Khaki;
+            this.linkLabelSelectAll.Location = new System.Drawing.Point(104, 64);
+            this.linkLabelSelectAll.Name = "linkLabelSelectAll";
+            this.linkLabelSelectAll.Size = new System.Drawing.Size(112, 23);
+            this.linkLabelSelectAll.TabIndex = 5;
+            this.linkLabelSelectAll.TabStop = true;
+            this.linkLabelSelectAll.Text = "Selected All Streams";
+            this.linkLabelSelectAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectAll_LinkClicked);
+            // 
+            // linkLabelRemoveStreams
+            // 
+            this.linkLabelRemoveStreams.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.linkLabelRemoveStreams.LinkColor = System.Drawing.Color.Gold;
+            this.linkLabelRemoveStreams.Location = new System.Drawing.Point(216, 64);
+            this.linkLabelRemoveStreams.Name = "linkLabelRemoveStreams";
+            this.linkLabelRemoveStreams.Size = new System.Drawing.Size(144, 23);
+            this.linkLabelRemoveStreams.TabIndex = 4;
+            this.linkLabelRemoveStreams.TabStop = true;
+            this.linkLabelRemoveStreams.Text = "Remove Selected Streams";
+            this.linkLabelRemoveStreams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelRemoveStreams_LinkClicked);
+            // 
+            // label1
+            // 
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label1.Location = new System.Drawing.Point(16, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(144, 16);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Select StartUp Folder:";
+            // 
+            // buttonBrowse
+            // 
+            this.buttonBrowse.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonBrowse.Location = new System.Drawing.Point(440, 32);
+            this.buttonBrowse.Name = "buttonBrowse";
+            this.buttonBrowse.Size = new System.Drawing.Size(75, 23);
+            this.buttonBrowse.TabIndex = 2;
+            this.buttonBrowse.Text = "Browse";
+            this.buttonBrowse.UseVisualStyleBackColor = false;
+            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            // 
+            // buttonFind
+            // 
+            this.buttonFind.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonFind.Location = new System.Drawing.Point(16, 64);
+            this.buttonFind.Name = "buttonFind";
+            this.buttonFind.Size = new System.Drawing.Size(75, 23);
+            this.buttonFind.TabIndex = 1;
+            this.buttonFind.Text = "Start search";
+            this.buttonFind.UseVisualStyleBackColor = false;
+            this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
+            // 
+            // dataGridResult
+            // 
+            this.dataGridResult.CaptionBackColor = System.Drawing.Color.CornflowerBlue;
+            this.dataGridResult.CaptionText = "Files Found";
+            this.dataGridResult.CausesValidation = false;
+            this.dataGridResult.DataMember = "FileInfo";
+            this.dataGridResult.DataSource = this.fileInfoData1;
+            this.dataGridResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridResult.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+            this.dataGridResult.Location = new System.Drawing.Point(0, 112);
+            this.dataGridResult.Name = "dataGridResult";
+            this.dataGridResult.ReadOnly = true;
+            this.dataGridResult.Size = new System.Drawing.Size(792, 454);
+            this.dataGridResult.TabIndex = 2;
+            this.dataGridResult.TableStyles.AddRange(new System.Windows.Forms.DataGridTableStyle[] {
+            this.dataGridTableStyle1});
+            // 
+            // fileInfoData1
+            // 
+            this.fileInfoData1.DataSetName = "FileInfoData";
+            this.fileInfoData1.Locale = new System.Globalization.CultureInfo("en-US");
+            this.fileInfoData1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // dataGridTableStyle1
+            // 
+            this.dataGridTableStyle1.DataGrid = this.dataGridResult;
+            this.dataGridTableStyle1.GridColumnStyles.AddRange(new System.Windows.Forms.DataGridColumnStyle[] {
+            this.dataGridTextBoxColumn1,
+            this.dataGridTextBoxColumn2,
+            this.dataGridTextBoxColumn3,
+            this.dataGridTextBoxColumn4,
+            this.dataGridTextBoxColumn5});
+            this.dataGridTableStyle1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+            this.dataGridTableStyle1.MappingName = "FileInfo";
+            // 
+            // dataGridTextBoxColumn1
+            // 
+            this.dataGridTextBoxColumn1.Format = "";
+            this.dataGridTextBoxColumn1.FormatInfo = null;
+            this.dataGridTextBoxColumn1.HeaderText = "File Name";
+            this.dataGridTextBoxColumn1.MappingName = "File Name";
+            this.dataGridTextBoxColumn1.Width = 200;
+            // 
+            // dataGridTextBoxColumn2
+            // 
+            this.dataGridTextBoxColumn2.Format = "";
+            this.dataGridTextBoxColumn2.FormatInfo = null;
+            this.dataGridTextBoxColumn2.HeaderText = "Stream";
+            this.dataGridTextBoxColumn2.MappingName = "Stream Name";
+            this.dataGridTextBoxColumn2.Width = 75;
+            // 
+            // dataGridTextBoxColumn3
+            // 
+            this.dataGridTextBoxColumn3.Format = "";
+            this.dataGridTextBoxColumn3.FormatInfo = null;
+            this.dataGridTextBoxColumn3.HeaderText = "Size (bytes)";
+            this.dataGridTextBoxColumn3.MappingName = "Stream Size";
+            this.dataGridTextBoxColumn3.Width = 75;
+            // 
+            // dataGridTextBoxColumn4
+            // 
+            this.dataGridTextBoxColumn4.Format = "";
+            this.dataGridTextBoxColumn4.FormatInfo = null;
+            this.dataGridTextBoxColumn4.HeaderText = "Location";
+            this.dataGridTextBoxColumn4.MappingName = "Location";
+            this.dataGridTextBoxColumn4.Width = 150;
+            // 
+            // dataGridTextBoxColumn5
+            // 
+            this.dataGridTextBoxColumn5.Format = "";
+            this.dataGridTextBoxColumn5.FormatInfo = null;
+            this.dataGridTextBoxColumn5.HeaderText = "Created";
+            this.dataGridTextBoxColumn5.MappingName = "Creation Date";
+            this.dataGridTextBoxColumn5.Width = 75;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter1.Location = new System.Drawing.Point(0, 112);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(792, 3);
+            this.splitter1.TabIndex = 3;
+            this.splitter1.TabStop = false;
+            // 
+            // timerGrid
+            // 
+            this.timerGrid.Enabled = true;
+            this.timerGrid.Interval = 300;
+            this.timerGrid.Tick += new System.EventHandler(this.timerGrid_Tick);
+            // 
+            // FindForm
+            // 
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.ClientSize = new System.Drawing.Size(792, 566);
+            this.Controls.Add(this.splitter1);
+            this.Controls.Add(this.dataGridResult);
+            this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "FindForm";
+            this.Text = "Search for NTFS Streams";
+            this.Load += new System.EventHandler(this.FindForm_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).EndInit();
+            this.ResumeLayout(false);
 
 		}
 		#endregion

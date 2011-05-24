@@ -7,7 +7,7 @@
     <ProjectGuid>{A80C5766-D529-4905-BB4B-FB72132A1E8B}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>App.ico</ApplicationIcon>
+    <ApplicationIcon>1306249954_old-edit-find.ico</ApplicationIcon>
     <AssemblyKeyContainerName />
     <AssemblyName>CNRService.StreamsFinder</AssemblyName>
     <AssemblyOriginatorKeyFile />
@@ -115,6 +115,7 @@
     <Compile Include="FindForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Content Include="1306249954_old-edit-find.ico" />
     <Content Include="App.ico" />
     <Content Include="FileInfoData.xsd">
       <Generator>MSDataSetGenerator</Generator>
