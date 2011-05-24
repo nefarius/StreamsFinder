@@ -83,6 +83,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Be.Windows.Forms.HexBox, Version=1.4.6.13072, Culture=neutral, PublicKeyToken=e0e5adf0ebc99863, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Be.Windows.Forms.HexBox.dll</HintPath>
+    </Reference>
     <Reference Include="NTFS">
       <Name>NTFS</Name>
       <HintPath>NTFS.dll</HintPath>
@@ -115,6 +119,12 @@
     <Compile Include="FindForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HexEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HexEditor.Designer.cs">
+      <DependentUpon>HexEditor.cs</DependentUpon>
+    </Compile>
     <Content Include="1306249954_old-edit-find.ico" />
     <Content Include="App.ico" />
     <Content Include="FileInfoData.xsd">
@@ -123,6 +133,9 @@
     </Content>
     <EmbeddedResource Include="FindForm.resx">
       <DependentUpon>FindForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HexEditor.resx">
+      <DependentUpon>HexEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="FileInfoData.xsc">
       <DependentUpon>FileInfoData.xsd</DependentUpon>

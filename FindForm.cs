@@ -27,6 +27,7 @@ using System.Data;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using Be.Windows.Forms;
 
 namespace CNRService.StreamsFinder
 {
@@ -70,6 +71,7 @@ namespace CNRService.StreamsFinder
         private System.ComponentModel.BackgroundWorker backgroundWorkerScan;
         private Label labelCurrentDirectory;
         private Label labelDirectory;
+        private Button buttonOpenHex;
         private int lastIndexAdded = 0;
 
         public FindForm()
@@ -108,6 +110,7 @@ namespace CNRService.StreamsFinder
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindForm));
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelDirectory = new System.Windows.Forms.Label();
             this.labelCurrentDirectory = new System.Windows.Forms.Label();
             this.buttonRemoveSelected = new System.Windows.Forms.Button();
             this.buttonSelectAll = new System.Windows.Forms.Button();
@@ -115,6 +118,11 @@ namespace CNRService.StreamsFinder
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.buttonFind = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.timerGrid = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
+            this.buttonOpenHex = new System.Windows.Forms.Button();
             this.dataGridResult = new System.Windows.Forms.DataGrid();
             this.fileInfoData1 = new CNRService.StreamsFinder.FileInfoData();
             this.dataGridTableStyle1 = new System.Windows.Forms.DataGridTableStyle();
@@ -123,11 +131,6 @@ namespace CNRService.StreamsFinder
             this.dataGridTextBoxColumn3 = new System.Windows.Forms.DataGridTextBoxColumn();
             this.dataGridTextBoxColumn4 = new System.Windows.Forms.DataGridTextBoxColumn();
             this.dataGridTextBoxColumn5 = new System.Windows.Forms.DataGridTextBoxColumn();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.splitter1 = new System.Windows.Forms.Splitter();
-            this.timerGrid = new System.Windows.Forms.Timer(this.components);
-            this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
-            this.labelDirectory = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).BeginInit();
@@ -144,6 +147,7 @@ namespace CNRService.StreamsFinder
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel1.Controls.Add(this.buttonOpenHex);
             this.panel1.Controls.Add(this.labelDirectory);
             this.panel1.Controls.Add(this.labelCurrentDirectory);
             this.panel1.Controls.Add(this.buttonRemoveSelected);
@@ -158,6 +162,16 @@ namespace CNRService.StreamsFinder
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(792, 112);
             this.panel1.TabIndex = 1;
+            // 
+            // labelDirectory
+            // 
+            this.labelDirectory.AutoSize = true;
+            this.labelDirectory.Location = new System.Drawing.Point(16, 93);
+            this.labelDirectory.Name = "labelDirectory";
+            this.labelDirectory.Size = new System.Drawing.Size(87, 13);
+            this.labelDirectory.TabIndex = 10;
+            this.labelDirectory.Text = "Current directory:";
+            this.labelDirectory.Visible = false;
             // 
             // labelCurrentDirectory
             // 
@@ -230,6 +244,38 @@ namespace CNRService.StreamsFinder
             this.buttonFind.Text = "Start search";
             this.buttonFind.UseVisualStyleBackColor = true;
             this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
+            // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter1.Location = new System.Drawing.Point(0, 112);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(792, 3);
+            this.splitter1.TabIndex = 3;
+            this.splitter1.TabStop = false;
+            // 
+            // timerGrid
+            // 
+            this.timerGrid.Interval = 300;
+            this.timerGrid.Tick += new System.EventHandler(this.timerGrid_Tick);
+            // 
+            // backgroundWorkerScan
+            // 
+            this.backgroundWorkerScan.WorkerReportsProgress = true;
+            this.backgroundWorkerScan.WorkerSupportsCancellation = true;
+            this.backgroundWorkerScan.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerScan_DoWork);
+            this.backgroundWorkerScan.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerScan_ProgressChanged);
+            this.backgroundWorkerScan.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerScan_RunWorkerCompleted);
+            // 
+            // buttonOpenHex
+            // 
+            this.buttonOpenHex.Location = new System.Drawing.Point(366, 64);
+            this.buttonOpenHex.Name = "buttonOpenHex";
+            this.buttonOpenHex.Size = new System.Drawing.Size(139, 23);
+            this.buttonOpenHex.TabIndex = 11;
+            this.buttonOpenHex.Text = "Open file in Hex-Editor...";
+            this.buttonOpenHex.UseVisualStyleBackColor = true;
+            this.buttonOpenHex.Click += new System.EventHandler(this.buttonOpenHex_Click);
             // 
             // dataGridResult
             // 
@@ -305,38 +351,6 @@ namespace CNRService.StreamsFinder
             this.dataGridTextBoxColumn5.HeaderText = "Created";
             this.dataGridTextBoxColumn5.MappingName = "Creation Date";
             this.dataGridTextBoxColumn5.Width = 75;
-            // 
-            // splitter1
-            // 
-            this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter1.Location = new System.Drawing.Point(0, 112);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(792, 3);
-            this.splitter1.TabIndex = 3;
-            this.splitter1.TabStop = false;
-            // 
-            // timerGrid
-            // 
-            this.timerGrid.Interval = 300;
-            this.timerGrid.Tick += new System.EventHandler(this.timerGrid_Tick);
-            // 
-            // backgroundWorkerScan
-            // 
-            this.backgroundWorkerScan.WorkerReportsProgress = true;
-            this.backgroundWorkerScan.WorkerSupportsCancellation = true;
-            this.backgroundWorkerScan.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerScan_DoWork);
-            this.backgroundWorkerScan.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerScan_ProgressChanged);
-            this.backgroundWorkerScan.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerScan_RunWorkerCompleted);
-            // 
-            // labelDirectory
-            // 
-            this.labelDirectory.AutoSize = true;
-            this.labelDirectory.Location = new System.Drawing.Point(16, 93);
-            this.labelDirectory.Name = "labelDirectory";
-            this.labelDirectory.Size = new System.Drawing.Size(87, 13);
-            this.labelDirectory.TabIndex = 10;
-            this.labelDirectory.Text = "Current directory:";
-            this.labelDirectory.Visible = false;
             // 
             // FindForm
             // 
@@ -576,6 +590,14 @@ namespace CNRService.StreamsFinder
             labelCurrentDirectory.Visible = false;
             this.buttonFind.Text = "Start search";
             timerGrid.Enabled = false;
+        }
+
+        private void buttonOpenHex_Click(object sender, EventArgs e)
+        {
+            HexEditor he = new HexEditor();
+            DynamicFileByteProvider dfbp = new DynamicFileByteProvider(@"M:\sshot.bmp");
+            he.hexBoxFileContent.ByteProvider = dfbp;
+            he.ShowDialog();
         }
     }
 }
