@@ -23,7 +23,6 @@
 //************************************************************************************
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Threading;
@@ -351,6 +350,7 @@ namespace CNRService.StreamsFinder
             {
                 this.buttonFind.Text = "Stop search";
 
+                this.ArrayFileInfo.Clear();
                 this.fileInfoData1.FileInfo.Rows.Clear();
 
                 Thread t = new Thread(new ThreadStart(FindFiles));
@@ -358,7 +358,6 @@ namespace CNRService.StreamsFinder
                 SearchThread.Start();
 
                 Thread.Sleep(200);
-
             }
         }
 
@@ -428,7 +427,6 @@ namespace CNRService.StreamsFinder
         {
             CurrencyManager cm = 
                 (CurrencyManager)this.BindingContext[dataGridResult.DataSource, dataGridResult.DataMember];
-            List<FileInfoData.FileInfoRow> rowsToDelete = new List<FileInfoData.FileInfoRow>();
 
             DataView dv = (DataView)cm.List;
             for (int i = 0; i < dv.Count; ++i)
@@ -447,28 +445,10 @@ namespace CNRService.StreamsFinder
                         }
                     }
 
-                    rowsToDelete.Add(r);
+                    if (ArrayFileInfo.Contains(r))
+                        ArrayFileInfo.Remove(r);
                 }
             }
-
-            if (rowsToDelete.Count > 0)
-                foreach (FileInfoData.FileInfoRow tmpRow in rowsToDelete)
-                    tmpRow.Delete();
-        }
-
-        public ArrayList GetSelectedRows(DataGrid dg)
-        {
-            ArrayList al = new ArrayList();
-
-            CurrencyManager cm = (CurrencyManager)this.BindingContext[dg.DataSource, dg.DataMember];
-
-            DataView dv = (DataView)cm.List;
-            for (int i = 0; i < dv.Count; ++i)
-            {
-                if (dg.IsSelected(i))
-                    al.Add(i);
-            }
-            return al;
         }
 
         private void buttonBrowse_Click(object sender, System.EventArgs e)
