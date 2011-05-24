@@ -52,7 +52,6 @@ namespace CNRService.StreamsFinder
         private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn5;
         private System.Windows.Forms.Splitter splitter1;
 
-        private Thread SearchThread;
         private System.Windows.Forms.Timer timerGrid;
 
         public struct FileInfoStruct
@@ -68,6 +67,9 @@ namespace CNRService.StreamsFinder
         private System.Windows.Forms.CheckBox checkBoxSubFolders;
         private Button buttonSelectAll;
         private Button buttonRemoveSelected;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerScan;
+        private Label labelCurrentDirectory;
+        private Label labelDirectory;
         private int lastIndexAdded = 0;
 
         public FindForm()
@@ -106,6 +108,7 @@ namespace CNRService.StreamsFinder
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindForm));
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelCurrentDirectory = new System.Windows.Forms.Label();
             this.buttonRemoveSelected = new System.Windows.Forms.Button();
             this.buttonSelectAll = new System.Windows.Forms.Button();
             this.checkBoxSubFolders = new System.Windows.Forms.CheckBox();
@@ -123,6 +126,8 @@ namespace CNRService.StreamsFinder
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.timerGrid = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
+            this.labelDirectory = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).BeginInit();
@@ -139,6 +144,8 @@ namespace CNRService.StreamsFinder
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel1.Controls.Add(this.labelDirectory);
+            this.panel1.Controls.Add(this.labelCurrentDirectory);
             this.panel1.Controls.Add(this.buttonRemoveSelected);
             this.panel1.Controls.Add(this.buttonSelectAll);
             this.panel1.Controls.Add(this.checkBoxSubFolders);
@@ -152,9 +159,19 @@ namespace CNRService.StreamsFinder
             this.panel1.Size = new System.Drawing.Size(792, 112);
             this.panel1.TabIndex = 1;
             // 
+            // labelCurrentDirectory
+            // 
+            this.labelCurrentDirectory.AutoEllipsis = true;
+            this.labelCurrentDirectory.Location = new System.Drawing.Point(109, 90);
+            this.labelCurrentDirectory.Name = "labelCurrentDirectory";
+            this.labelCurrentDirectory.Size = new System.Drawing.Size(502, 19);
+            this.labelCurrentDirectory.TabIndex = 9;
+            this.labelCurrentDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // buttonRemoveSelected
             // 
             this.buttonRemoveSelected.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonRemoveSelected.Enabled = false;
             this.buttonRemoveSelected.Location = new System.Drawing.Point(207, 64);
             this.buttonRemoveSelected.Name = "buttonRemoveSelected";
             this.buttonRemoveSelected.Size = new System.Drawing.Size(153, 23);
@@ -166,6 +183,7 @@ namespace CNRService.StreamsFinder
             // buttonSelectAll
             // 
             this.buttonSelectAll.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonSelectAll.Enabled = false;
             this.buttonSelectAll.Location = new System.Drawing.Point(97, 64);
             this.buttonSelectAll.Name = "buttonSelectAll";
             this.buttonSelectAll.Size = new System.Drawing.Size(104, 23);
@@ -299,9 +317,26 @@ namespace CNRService.StreamsFinder
             // 
             // timerGrid
             // 
-            this.timerGrid.Enabled = true;
             this.timerGrid.Interval = 300;
             this.timerGrid.Tick += new System.EventHandler(this.timerGrid_Tick);
+            // 
+            // backgroundWorkerScan
+            // 
+            this.backgroundWorkerScan.WorkerReportsProgress = true;
+            this.backgroundWorkerScan.WorkerSupportsCancellation = true;
+            this.backgroundWorkerScan.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerScan_DoWork);
+            this.backgroundWorkerScan.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerScan_ProgressChanged);
+            this.backgroundWorkerScan.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerScan_RunWorkerCompleted);
+            // 
+            // labelDirectory
+            // 
+            this.labelDirectory.AutoSize = true;
+            this.labelDirectory.Location = new System.Drawing.Point(16, 93);
+            this.labelDirectory.Name = "labelDirectory";
+            this.labelDirectory.Size = new System.Drawing.Size(87, 13);
+            this.labelDirectory.TabIndex = 10;
+            this.labelDirectory.Text = "Current directory:";
+            this.labelDirectory.Visible = false;
             // 
             // FindForm
             // 
@@ -337,14 +372,16 @@ namespace CNRService.StreamsFinder
 
         private void buttonFind_Click(object sender, System.EventArgs e)
         {
-            if (SearchThread != null)
+            if (backgroundWorkerScan.IsBusy)
             {
-                if (SearchThread.ThreadState == ThreadState.Running)
-                    SearchThread.Abort();
+                backgroundWorkerScan.CancelAsync();
             }
+
             if (this.buttonFind.Text == "Stop search")
             {
                 this.buttonFind.Text = "Start search";
+                labelDirectory.Visible = false;
+                labelCurrentDirectory.Visible = false;
             }
             else
             {
@@ -352,27 +389,11 @@ namespace CNRService.StreamsFinder
 
                 this.ArrayFileInfo.Clear();
                 this.fileInfoData1.FileInfo.Rows.Clear();
+                labelDirectory.Visible = true;
+                labelCurrentDirectory.Visible = true;
 
-                Thread t = new Thread(new ThreadStart(FindFiles));
-                SearchThread = t;
-                SearchThread.Start();
-
-                Thread.Sleep(200);
-            }
-        }
-
-        private delegate void FindFilesCallback();
-        private void FindFiles()
-        {
-            if (this.textBoxFind.InvokeRequired)
-            {
-                DirSearch(this.textBoxFind.Text, this.checkBoxSubFolders.Checked);
-                FindFilesCallback ff = new FindFilesCallback(FindFiles);
-                this.Invoke(ff);
-            }
-            else
-            {
-                this.buttonFind.Text = "Start search";
+                backgroundWorkerScan.RunWorkerAsync();
+                timerGrid.Enabled = true;
             }
         }
 
@@ -382,11 +403,15 @@ namespace CNRService.StreamsFinder
             {
                 foreach (string f in Directory.GetFiles(sDir))
                 {
+                    ReportDirName(f);
                     FileInfo FSInfo = new FileInfo(f);
                     NTFS.FileStreams FS = new NTFS.FileStreams(f);
 
                     foreach (NTFS.StreamInfo s in FS)
                     {
+                        if (backgroundWorkerScan.CancellationPending)
+                            return;
+
                         FileInfoStruct fis;
                         fis.File_Name = FS.FileName;
                         fis.Stream_Name = s.Name;
@@ -398,13 +423,14 @@ namespace CNRService.StreamsFinder
                     }
                 }
                 // update the results label
-                String caption = "Results:  (" + this.ArrayFileInfo.Count.ToString() + ")";
-                this.dataGridResult.CaptionText = caption;
+                backgroundWorkerScan.ReportProgress(this.ArrayFileInfo.Count);
 
                 if (subFolders)
                 {
                     foreach (string d in Directory.GetDirectories(sDir))
                     {
+                        if (backgroundWorkerScan.CancellationPending)
+                            return;
                         DirSearch(d, subFolders);
                     }
                 }
@@ -427,6 +453,7 @@ namespace CNRService.StreamsFinder
         {
             CurrencyManager cm = 
                 (CurrencyManager)this.BindingContext[dataGridResult.DataSource, dataGridResult.DataMember];
+            ArrayList removeRows = new ArrayList();
 
             DataView dv = (DataView)cm.List;
             for (int i = 0; i < dv.Count; ++i)
@@ -445,9 +472,15 @@ namespace CNRService.StreamsFinder
                         }
                     }
 
-                    if (ArrayFileInfo.Contains(r))
-                        ArrayFileInfo.Remove(r);
+                    removeRows.Add(r);
                 }
+            }
+
+            if(removeRows.Count > 0)
+            {
+                foreach (FileInfoData.FileInfoRow fir in removeRows)
+                    fir.Delete();
+                dataGridResult.Update();
             }
         }
 
@@ -482,6 +515,20 @@ namespace CNRService.StreamsFinder
             this.timerGrid.Enabled = true;
         }
 
+        private delegate void ReportDirNameCallback(String dirname);
+        private void ReportDirName(string dirname)
+        {
+            if (labelCurrentDirectory.InvokeRequired)
+            {
+                ReportDirNameCallback rfc = new ReportDirNameCallback(ReportDirName);
+                this.Invoke(rfc, dirname);
+            }
+            else
+            {
+                labelCurrentDirectory.Text = Path.GetDirectoryName(dirname);
+            }
+        }
+
         private void buttonSelectAll_Click(object sender, EventArgs e)
         {
             CurrencyManager cm = (CurrencyManager)this.BindingContext[dataGridResult.DataSource, dataGridResult.DataMember];
@@ -497,8 +544,38 @@ namespace CNRService.StreamsFinder
         {
             string msg = "Do you want to delete the selected Streams?";
 
-            if (MessageBox.Show(msg, "Delete Streams", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(msg, "Delete Streams", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 RemoveSelectedStreams();
+        }
+
+        private void backgroundWorkerScan_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            DirSearch(this.textBoxFind.Text, this.checkBoxSubFolders.Checked);
+        }
+
+        private void backgroundWorkerScan_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            this.dataGridResult.CaptionText = "Results:  (" + e.ProgressPercentage.ToString() + ")";
+        }
+
+        private void backgroundWorkerScan_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (this.ArrayFileInfo.Count > 0)
+            {
+                buttonSelectAll.Enabled = true;
+                buttonRemoveSelected.Enabled = true;
+            }
+            else
+            {
+                buttonSelectAll.Enabled = false;
+                buttonRemoveSelected.Enabled = false;
+            }
+
+            labelDirectory.Visible = false;
+            labelCurrentDirectory.Visible = false;
+            this.buttonFind.Text = "Start search";
+            timerGrid.Enabled = false;
         }
     }
 }
