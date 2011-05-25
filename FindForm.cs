@@ -416,7 +416,6 @@ namespace CNRService.StreamsFinder
             this.Name = "FindForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NTFS Stream Scanner and Editor";
-            this.Load += new System.EventHandler(this.FindForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).EndInit();
@@ -512,50 +511,6 @@ namespace CNRService.StreamsFinder
             }
         }
 
-        private void FindForm_Load(object sender, System.EventArgs e)
-        {
-            DataView dw = this.fileInfoDataStreams.FileInfo.DefaultView;
-            dw.AllowEdit = false;
-            dw.AllowDelete = false;
-            dw.AllowNew = false;
-            this.dataGridResult.DataSource = dw;
-        }
-
-        private void RemoveSelectedStreams()
-        {
-            CurrencyManager cm = 
-                (CurrencyManager)this.BindingContext[dataGridResult.DataSource, dataGridResult.DataMember];
-            ArrayList removeRows = new ArrayList();
-
-            DataView dv = (DataView)cm.List;
-            for (int i = 0; i < dv.Count; ++i)
-            {
-                if (dataGridResult.Rows[i].Selected)
-                {
-                    FileInfoData.FileInfoRow r = (FileInfoData.FileInfoRow)dv[i].Row;
-
-                    NTFS.FileStreams FS = new NTFS.FileStreams(r.File_Name);
-
-                    foreach (NTFS.StreamInfo s in FS)
-                    {
-                        if (s.Name == r.Stream_Name)
-                        {
-                            s.Delete();
-                        }
-                    }
-
-                    removeRows.Add(r);
-                }
-            }
-
-            if(removeRows.Count > 0)
-            {
-                foreach (FileInfoData.FileInfoRow fir in removeRows)
-                    fir.Delete();
-                dataGridResult.Update();
-            }
-        }
-
         private void buttonBrowse_Click(object sender, System.EventArgs e)
         {
             if (this.folderBrowserDialog1.ShowDialog() == DialogResult.OK)
@@ -565,9 +520,7 @@ namespace CNRService.StreamsFinder
         private void timerGrid_Tick(object sender, System.EventArgs e)
         {
             this.timerGrid.Enabled = false;
-
             int cnt = ArrayFileInfo.Count;
-
 
             for (int i = lastIndexAdded; i < cnt; i++)
             {
@@ -583,6 +536,7 @@ namespace CNRService.StreamsFinder
                 r.EndEdit();
                 this.fileInfoDataStreams.FileInfo.AddFileInfoRow(r);
             }
+
             lastIndexAdded = cnt;
             this.timerGrid.Enabled = true;
         }
@@ -610,9 +564,36 @@ namespace CNRService.StreamsFinder
         {
             string msg = "Do you want to delete the selected Streams?";
 
-            if (MessageBox.Show(msg, "Delete Streams", 
+            if (MessageBox.Show(msg, "Delete Streams",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                RemoveSelectedStreams();
+            {
+                ArrayList removeRows = new ArrayList();
+
+                foreach (DataGridViewRow row in dataGridResult.SelectedRows)
+                {
+                    FileInfoData.FileInfoRow r = 
+                        (FileInfoData.FileInfoRow)fileInfoDataStreams.FileInfo[row.Index];
+
+                    NTFS.FileStreams FS = new NTFS.FileStreams(r.File_Name);
+
+                    foreach (NTFS.StreamInfo s in FS)
+                    {
+                        if (s.Name == r.Stream_Name)
+                        {
+                            s.Delete();
+                        }
+                    }
+
+                    removeRows.Add(r);
+                }
+
+                if (removeRows.Count > 0)
+                {
+                    foreach (FileInfoData.FileInfoRow fir in removeRows)
+                        fir.Delete();
+                    dataGridResult.Update();
+                }
+            }
         }
 
         private void backgroundWorkerScan_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
