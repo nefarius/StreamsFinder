@@ -39,7 +39,7 @@
             this.hexBoxFileContent.Location = new System.Drawing.Point(12, 12);
             this.hexBoxFileContent.Name = "hexBoxFileContent";
             this.hexBoxFileContent.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hexBoxFileContent.Size = new System.Drawing.Size(600, 422);
+            this.hexBoxFileContent.Size = new System.Drawing.Size(663, 422);
             this.hexBoxFileContent.StringViewVisible = true;
             this.hexBoxFileContent.TabIndex = 0;
             this.hexBoxFileContent.UseFixedBytesPerLine = true;
@@ -49,7 +49,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 446);
+            this.ClientSize = new System.Drawing.Size(687, 446);
             this.Controls.Add(this.hexBoxFileContent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "HexEditor";
