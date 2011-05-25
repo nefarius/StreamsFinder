@@ -435,7 +435,8 @@ namespace CNRService.StreamsFinder
             {
                 this.buttonFind.Text = "Stop search";
 
-                this.ArrayFileInfo.Clear();
+                lastIndexAdded = 0;
+                ArrayFileInfo.Clear();
                 this.fileInfoDataStreams.FileInfo.Rows.Clear();
                 labelDirectory.Visible = true;
                 labelCurrentDirectory.Visible = true;

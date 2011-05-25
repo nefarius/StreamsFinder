@@ -125,17 +125,28 @@
     <Compile Include="HexEditor.Designer.cs">
       <DependentUpon>HexEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Content Include="1306249954_old-edit-find.ico" />
     <Content Include="App.ico" />
     <Content Include="FileInfoData.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>FileInfoData.Designer.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\1306333379_095.png" />
+    <None Include="Resources\1306333295_cross_circle_frame.png" />
     <EmbeddedResource Include="FindForm.resx">
       <DependentUpon>FindForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HexEditor.resx">
       <DependentUpon>HexEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="FileInfoData.xsc">
       <DependentUpon>FileInfoData.xsd</DependentUpon>

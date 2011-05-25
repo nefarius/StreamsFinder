@@ -14,5 +14,15 @@ namespace CNRService.StreamsFinder
         {
             InitializeComponent();
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.hexBoxFileContent.ByteProvider.ApplyChanges();
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
