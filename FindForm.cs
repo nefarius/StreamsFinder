@@ -37,20 +37,13 @@ namespace CNRService.StreamsFinder
     public class FindForm : System.Windows.Forms.Form
     {
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGrid dataGridResult;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonFind;
         private System.Windows.Forms.TextBox textBoxFind;
         private System.Windows.Forms.Button buttonBrowse;
         private System.ComponentModel.IContainer components;
-        private CNRService.StreamsFinder.FileInfoData fileInfoData1;
-        private System.Windows.Forms.DataGridTableStyle dataGridTableStyle1;
-        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn1;
-        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn2;
-        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn3;
-        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn4;
-        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn5;
+        private CNRService.StreamsFinder.FileInfoData fileInfoDataSTreams;
         private System.Windows.Forms.Splitter splitter1;
 
         private System.Windows.Forms.Timer timerGrid;
@@ -72,6 +65,16 @@ namespace CNRService.StreamsFinder
         private Label labelCurrentDirectory;
         private Label labelDirectory;
         private Button buttonOpenHex;
+        private DataGridView dataGridResult;
+        private BindingSource fileInfoData1BindingSource;
+        private StatusStrip statusStripInfo;
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripStatusLabel labelFoundItems;
+        private DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn streamNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn streamSizeDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn creationDateDataGridViewTextBoxColumn;
         private int lastIndexAdded = 0;
 
         public FindForm()
@@ -110,6 +113,7 @@ namespace CNRService.StreamsFinder
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindForm));
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonOpenHex = new System.Windows.Forms.Button();
             this.labelDirectory = new System.Windows.Forms.Label();
             this.labelCurrentDirectory = new System.Windows.Forms.Label();
             this.buttonRemoveSelected = new System.Windows.Forms.Button();
@@ -122,18 +126,22 @@ namespace CNRService.StreamsFinder
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.timerGrid = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
-            this.buttonOpenHex = new System.Windows.Forms.Button();
-            this.dataGridResult = new System.Windows.Forms.DataGrid();
-            this.fileInfoData1 = new CNRService.StreamsFinder.FileInfoData();
-            this.dataGridTableStyle1 = new System.Windows.Forms.DataGridTableStyle();
-            this.dataGridTextBoxColumn1 = new System.Windows.Forms.DataGridTextBoxColumn();
-            this.dataGridTextBoxColumn2 = new System.Windows.Forms.DataGridTextBoxColumn();
-            this.dataGridTextBoxColumn3 = new System.Windows.Forms.DataGridTextBoxColumn();
-            this.dataGridTextBoxColumn4 = new System.Windows.Forms.DataGridTextBoxColumn();
-            this.dataGridTextBoxColumn5 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.fileInfoDataSTreams = new CNRService.StreamsFinder.FileInfoData();
+            this.dataGridResult = new System.Windows.Forms.DataGridView();
+            this.fileInfoData1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.statusStripInfo = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labelFoundItems = new System.Windows.Forms.ToolStripStatusLabel();
+            this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.streamNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.streamSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.creationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataSTreams)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).BeginInit();
+            this.statusStripInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxFind
@@ -162,6 +170,16 @@ namespace CNRService.StreamsFinder
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(792, 112);
             this.panel1.TabIndex = 1;
+            // 
+            // buttonOpenHex
+            // 
+            this.buttonOpenHex.Location = new System.Drawing.Point(366, 64);
+            this.buttonOpenHex.Name = "buttonOpenHex";
+            this.buttonOpenHex.Size = new System.Drawing.Size(139, 23);
+            this.buttonOpenHex.TabIndex = 11;
+            this.buttonOpenHex.Text = "Open file in Hex-Editor...";
+            this.buttonOpenHex.UseVisualStyleBackColor = true;
+            this.buttonOpenHex.Click += new System.EventHandler(this.buttonOpenHex_Click);
             // 
             // labelDirectory
             // 
@@ -267,97 +285,105 @@ namespace CNRService.StreamsFinder
             this.backgroundWorkerScan.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerScan_ProgressChanged);
             this.backgroundWorkerScan.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerScan_RunWorkerCompleted);
             // 
-            // buttonOpenHex
+            // fileInfoDataSTreams
             // 
-            this.buttonOpenHex.Location = new System.Drawing.Point(366, 64);
-            this.buttonOpenHex.Name = "buttonOpenHex";
-            this.buttonOpenHex.Size = new System.Drawing.Size(139, 23);
-            this.buttonOpenHex.TabIndex = 11;
-            this.buttonOpenHex.Text = "Open file in Hex-Editor...";
-            this.buttonOpenHex.UseVisualStyleBackColor = true;
-            this.buttonOpenHex.Click += new System.EventHandler(this.buttonOpenHex_Click);
+            this.fileInfoDataSTreams.DataSetName = "FileInfoData";
+            this.fileInfoDataSTreams.Locale = new System.Globalization.CultureInfo("en-US");
+            this.fileInfoDataSTreams.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // dataGridResult
             // 
-            this.dataGridResult.CaptionBackColor = System.Drawing.Color.CornflowerBlue;
-            this.dataGridResult.CaptionText = "Files Found";
-            this.dataGridResult.CausesValidation = false;
+            this.dataGridResult.AllowUserToAddRows = false;
+            this.dataGridResult.AllowUserToResizeRows = false;
+            this.dataGridResult.AutoGenerateColumns = false;
+            this.dataGridResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fileNameDataGridViewTextBoxColumn,
+            this.streamNameDataGridViewTextBoxColumn,
+            this.streamSizeDataGridViewTextBoxColumn,
+            this.locationDataGridViewTextBoxColumn,
+            this.creationDateDataGridViewTextBoxColumn});
             this.dataGridResult.DataMember = "FileInfo";
-            this.dataGridResult.DataSource = this.fileInfoData1;
+            this.dataGridResult.DataSource = this.fileInfoData1BindingSource;
             this.dataGridResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridResult.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-            this.dataGridResult.Location = new System.Drawing.Point(0, 112);
+            this.dataGridResult.Location = new System.Drawing.Point(0, 115);
             this.dataGridResult.Name = "dataGridResult";
             this.dataGridResult.ReadOnly = true;
-            this.dataGridResult.Size = new System.Drawing.Size(792, 454);
-            this.dataGridResult.TabIndex = 2;
-            this.dataGridResult.TableStyles.AddRange(new System.Windows.Forms.DataGridTableStyle[] {
-            this.dataGridTableStyle1});
+            this.dataGridResult.Size = new System.Drawing.Size(792, 451);
+            this.dataGridResult.TabIndex = 4;
+            this.dataGridResult.SelectionChanged += new System.EventHandler(this.dataGridResult_SelectionChanged);
             // 
-            // fileInfoData1
+            // fileInfoData1BindingSource
             // 
-            this.fileInfoData1.DataSetName = "FileInfoData";
-            this.fileInfoData1.Locale = new System.Globalization.CultureInfo("en-US");
-            this.fileInfoData1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.fileInfoData1BindingSource.DataSource = this.fileInfoDataSTreams;
+            this.fileInfoData1BindingSource.Position = 0;
             // 
-            // dataGridTableStyle1
+            // statusStripInfo
             // 
-            this.dataGridTableStyle1.DataGrid = this.dataGridResult;
-            this.dataGridTableStyle1.GridColumnStyles.AddRange(new System.Windows.Forms.DataGridColumnStyle[] {
-            this.dataGridTextBoxColumn1,
-            this.dataGridTextBoxColumn2,
-            this.dataGridTextBoxColumn3,
-            this.dataGridTextBoxColumn4,
-            this.dataGridTextBoxColumn5});
-            this.dataGridTableStyle1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-            this.dataGridTableStyle1.MappingName = "FileInfo";
+            this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.labelFoundItems});
+            this.statusStripInfo.Location = new System.Drawing.Point(0, 544);
+            this.statusStripInfo.Name = "statusStripInfo";
+            this.statusStripInfo.Size = new System.Drawing.Size(792, 22);
+            this.statusStripInfo.TabIndex = 5;
+            this.statusStripInfo.Text = "statusStrip1";
             // 
-            // dataGridTextBoxColumn1
+            // toolStripStatusLabel1
             // 
-            this.dataGridTextBoxColumn1.Format = "";
-            this.dataGridTextBoxColumn1.FormatInfo = null;
-            this.dataGridTextBoxColumn1.HeaderText = "File Name";
-            this.dataGridTextBoxColumn1.MappingName = "File Name";
-            this.dataGridTextBoxColumn1.Width = 200;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(87, 17);
+            this.toolStripStatusLabel1.Text = "Streams found:";
             // 
-            // dataGridTextBoxColumn2
+            // labelFoundItems
             // 
-            this.dataGridTextBoxColumn2.Format = "";
-            this.dataGridTextBoxColumn2.FormatInfo = null;
-            this.dataGridTextBoxColumn2.HeaderText = "Stream";
-            this.dataGridTextBoxColumn2.MappingName = "Stream Name";
-            this.dataGridTextBoxColumn2.Width = 75;
+            this.labelFoundItems.Name = "labelFoundItems";
+            this.labelFoundItems.Size = new System.Drawing.Size(13, 17);
+            this.labelFoundItems.Text = "0";
             // 
-            // dataGridTextBoxColumn3
+            // fileNameDataGridViewTextBoxColumn
             // 
-            this.dataGridTextBoxColumn3.Format = "";
-            this.dataGridTextBoxColumn3.FormatInfo = null;
-            this.dataGridTextBoxColumn3.HeaderText = "Size (bytes)";
-            this.dataGridTextBoxColumn3.MappingName = "Stream Size";
-            this.dataGridTextBoxColumn3.Width = 75;
+            this.fileNameDataGridViewTextBoxColumn.DataPropertyName = "File Name";
+            this.fileNameDataGridViewTextBoxColumn.HeaderText = "File Name";
+            this.fileNameDataGridViewTextBoxColumn.Name = "fileNameDataGridViewTextBoxColumn";
+            this.fileNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.fileNameDataGridViewTextBoxColumn.Width = 350;
             // 
-            // dataGridTextBoxColumn4
+            // streamNameDataGridViewTextBoxColumn
             // 
-            this.dataGridTextBoxColumn4.Format = "";
-            this.dataGridTextBoxColumn4.FormatInfo = null;
-            this.dataGridTextBoxColumn4.HeaderText = "Location";
-            this.dataGridTextBoxColumn4.MappingName = "Location";
-            this.dataGridTextBoxColumn4.Width = 150;
+            this.streamNameDataGridViewTextBoxColumn.DataPropertyName = "Stream Name";
+            this.streamNameDataGridViewTextBoxColumn.HeaderText = "Stream Name";
+            this.streamNameDataGridViewTextBoxColumn.Name = "streamNameDataGridViewTextBoxColumn";
+            this.streamNameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dataGridTextBoxColumn5
+            // streamSizeDataGridViewTextBoxColumn
             // 
-            this.dataGridTextBoxColumn5.Format = "";
-            this.dataGridTextBoxColumn5.FormatInfo = null;
-            this.dataGridTextBoxColumn5.HeaderText = "Created";
-            this.dataGridTextBoxColumn5.MappingName = "Creation Date";
-            this.dataGridTextBoxColumn5.Width = 75;
+            this.streamSizeDataGridViewTextBoxColumn.DataPropertyName = "Stream Size";
+            this.streamSizeDataGridViewTextBoxColumn.HeaderText = "Stream Size";
+            this.streamSizeDataGridViewTextBoxColumn.Name = "streamSizeDataGridViewTextBoxColumn";
+            this.streamSizeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // locationDataGridViewTextBoxColumn
+            // 
+            this.locationDataGridViewTextBoxColumn.DataPropertyName = "Location";
+            this.locationDataGridViewTextBoxColumn.HeaderText = "Location";
+            this.locationDataGridViewTextBoxColumn.Name = "locationDataGridViewTextBoxColumn";
+            this.locationDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // creationDateDataGridViewTextBoxColumn
+            // 
+            this.creationDateDataGridViewTextBoxColumn.DataPropertyName = "Creation Date";
+            this.creationDateDataGridViewTextBoxColumn.HeaderText = "Creation Date";
+            this.creationDateDataGridViewTextBoxColumn.Name = "creationDateDataGridViewTextBoxColumn";
+            this.creationDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // FindForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(792, 566);
-            this.Controls.Add(this.splitter1);
+            this.Controls.Add(this.statusStripInfo);
             this.Controls.Add(this.dataGridResult);
+            this.Controls.Add(this.splitter1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FindForm";
@@ -366,9 +392,13 @@ namespace CNRService.StreamsFinder
             this.Load += new System.EventHandler(this.FindForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataSTreams)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).EndInit();
+            this.statusStripInfo.ResumeLayout(false);
+            this.statusStripInfo.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         #endregion
@@ -402,7 +432,7 @@ namespace CNRService.StreamsFinder
                 this.buttonFind.Text = "Stop search";
 
                 this.ArrayFileInfo.Clear();
-                this.fileInfoData1.FileInfo.Rows.Clear();
+                this.fileInfoDataSTreams.FileInfo.Rows.Clear();
                 labelDirectory.Visible = true;
                 labelCurrentDirectory.Visible = true;
 
@@ -456,7 +486,7 @@ namespace CNRService.StreamsFinder
 
         private void FindForm_Load(object sender, System.EventArgs e)
         {
-            DataView dw = this.fileInfoData1.FileInfo.DefaultView;
+            DataView dw = this.fileInfoDataSTreams.FileInfo.DefaultView;
             dw.AllowEdit = false;
             dw.AllowDelete = false;
             dw.AllowNew = false;
@@ -472,7 +502,7 @@ namespace CNRService.StreamsFinder
             DataView dv = (DataView)cm.List;
             for (int i = 0; i < dv.Count; ++i)
             {
-                if (dataGridResult.IsSelected(i))
+                if (dataGridResult.Rows[i].Selected)
                 {
                     FileInfoData.FileInfoRow r = (FileInfoData.FileInfoRow)dv[i].Row;
 
@@ -515,7 +545,7 @@ namespace CNRService.StreamsFinder
             {
                 FileInfoStruct fis = (FileInfoStruct)ArrayFileInfo[i];
 
-                FileInfoData.FileInfoRow r = this.fileInfoData1.FileInfo.NewFileInfoRow();
+                FileInfoData.FileInfoRow r = this.fileInfoDataSTreams.FileInfo.NewFileInfoRow();
                 r.BeginEdit();
                 r.File_Name = fis.File_Name;
                 r.Stream_Name = fis.Stream_Name;
@@ -523,7 +553,7 @@ namespace CNRService.StreamsFinder
                 r.Location = fis.Location;
                 r.Creation_Date = fis.Creation_Date;
                 r.EndEdit();
-                this.fileInfoData1.FileInfo.AddFileInfoRow(r);
+                this.fileInfoDataSTreams.FileInfo.AddFileInfoRow(r);
             }
             lastIndexAdded = cnt;
             this.timerGrid.Enabled = true;
@@ -545,13 +575,7 @@ namespace CNRService.StreamsFinder
 
         private void buttonSelectAll_Click(object sender, EventArgs e)
         {
-            CurrencyManager cm = (CurrencyManager)this.BindingContext[dataGridResult.DataSource, dataGridResult.DataMember];
-
-            DataView dv = (DataView)cm.List;
-            for (int i = 0; i < dv.Count; ++i)
-            {
-                dataGridResult.Select(i);
-            }
+            dataGridResult.SelectAll();
         }
 
         private void buttonRemoveSelected_Click(object sender, EventArgs e)
@@ -570,7 +594,7 @@ namespace CNRService.StreamsFinder
 
         private void backgroundWorkerScan_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            this.dataGridResult.CaptionText = "Results:  (" + e.ProgressPercentage.ToString() + ")";
+            labelFoundItems.Text = e.ProgressPercentage.ToString();
         }
 
         private void backgroundWorkerScan_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -598,6 +622,11 @@ namespace CNRService.StreamsFinder
             DynamicFileByteProvider dfbp = new DynamicFileByteProvider(@"M:\sshot.bmp");
             he.hexBoxFileContent.ByteProvider = dfbp;
             he.ShowDialog();
+        }
+
+        private void dataGridResult_SelectionChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
