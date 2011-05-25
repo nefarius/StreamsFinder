@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.hexBoxFileContent = new Be.Windows.Forms.HexBox();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1.SuspendLayout();
+            this.toolStripMenu = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // hexBoxFileContent
@@ -49,50 +49,51 @@
             this.hexBoxFileContent.UseFixedBytesPerLine = true;
             this.hexBoxFileContent.VScrollBarVisible = true;
             // 
-            // toolStrip1
+            // toolStripMenu
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(687, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStripMenu";
+            this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonSave,
+            this.toolStripButtonClose});
+            this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
+            this.toolStripMenu.Name = "toolStripMenu";
+            this.toolStripMenu.Size = new System.Drawing.Size(687, 25);
+            this.toolStripMenu.TabIndex = 1;
+            this.toolStripMenu.Text = "Menu";
             // 
-            // toolStripButton1
+            // toolStripButtonSave
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::CNRService.StreamsFinder.Properties.Resources._1306333379_095;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButtonSave";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSave.Image = global::CNRService.StreamsFinder.Properties.Resources._1306333379_095;
+            this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSave.Name = "toolStripButtonSave";
+            this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSave.Text = "Save changes";
+            this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
             // 
-            // toolStripButton2
+            // toolStripButtonClose
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::CNRService.StreamsFinder.Properties.Resources._1306333295_cross_circle_frame;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButtonClose";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.toolStripButtonClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonClose.Image = global::CNRService.StreamsFinder.Properties.Resources._1306333295_cross_circle_frame;
+            this.toolStripButtonClose.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonClose.Name = "toolStripButtonClose";
+            this.toolStripButtonClose.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonClose.Text = "Close window";
+            this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
             // 
             // HexEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(687, 446);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.toolStripMenu);
             this.Controls.Add(this.hexBoxFileContent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "HexEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "HexEditor";
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HexEditor_FormClosing);
+            this.toolStripMenu.ResumeLayout(false);
+            this.toolStripMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,9 +102,9 @@
         #endregion
 
         public Be.Windows.Forms.HexBox hexBoxFileContent;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStrip toolStripMenu;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSave;
+        private System.Windows.Forms.ToolStripButton toolStripButtonClose;
 
     }
 }

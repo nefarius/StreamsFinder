@@ -25,7 +25,6 @@ using System;
 using System.Collections;
 using System.Data;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 using Be.Windows.Forms;
 
@@ -75,6 +74,8 @@ namespace CNRService.StreamsFinder
         private DataGridViewTextBoxColumn streamSizeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn creationDateDataGridViewTextBoxColumn;
+        private Button buttonExport;
+        private SaveFileDialog saveFileDialogExport;
         private int lastIndexAdded = 0;
 
         public FindForm()
@@ -137,6 +138,8 @@ namespace CNRService.StreamsFinder
             this.streamSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.creationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonExport = new System.Windows.Forms.Button();
+            this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
@@ -155,6 +158,7 @@ namespace CNRService.StreamsFinder
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel1.Controls.Add(this.buttonExport);
             this.panel1.Controls.Add(this.buttonOpenHex);
             this.panel1.Controls.Add(this.labelDirectory);
             this.panel1.Controls.Add(this.labelCurrentDirectory);
@@ -198,7 +202,7 @@ namespace CNRService.StreamsFinder
             this.labelCurrentDirectory.AutoEllipsis = true;
             this.labelCurrentDirectory.Location = new System.Drawing.Point(109, 90);
             this.labelCurrentDirectory.Name = "labelCurrentDirectory";
-            this.labelCurrentDirectory.Size = new System.Drawing.Size(502, 19);
+            this.labelCurrentDirectory.Size = new System.Drawing.Size(671, 19);
             this.labelCurrentDirectory.TabIndex = 9;
             this.labelCurrentDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -228,6 +232,8 @@ namespace CNRService.StreamsFinder
             // 
             // checkBoxSubFolders
             // 
+            this.checkBoxSubFolders.Checked = true;
+            this.checkBoxSubFolders.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxSubFolders.Location = new System.Drawing.Point(511, 30);
             this.checkBoxSubFolders.Name = "checkBoxSubFolders";
             this.checkBoxSubFolders.Size = new System.Drawing.Size(128, 24);
@@ -381,6 +387,22 @@ namespace CNRService.StreamsFinder
             this.creationDateDataGridViewTextBoxColumn.Name = "creationDateDataGridViewTextBoxColumn";
             this.creationDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // buttonExport
+            // 
+            this.buttonExport.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonExport.Enabled = false;
+            this.buttonExport.Location = new System.Drawing.Point(511, 64);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(89, 23);
+            this.buttonExport.TabIndex = 12;
+            this.buttonExport.Text = "Export to file...";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            // 
+            // saveFileDialogExport
+            // 
+            this.saveFileDialogExport.Filter = "All files|*.*";
+            // 
             // FindForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -390,9 +412,10 @@ namespace CNRService.StreamsFinder
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(808, 604);
             this.Name = "FindForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Search for NTFS Streams";
+            this.Text = "NTFS Stream Scanner and Editor";
             this.Load += new System.EventHandler(this.FindForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -604,21 +627,11 @@ namespace CNRService.StreamsFinder
 
         private void backgroundWorkerScan_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            if (this.ArrayFileInfo.Count > 0)
-            {
-                buttonSelectAll.Enabled = true;
-                buttonRemoveSelected.Enabled = true;
-            }
-            else
-            {
-                buttonSelectAll.Enabled = false;
-                buttonRemoveSelected.Enabled = false;
-            }
-
             labelDirectory.Visible = false;
             labelCurrentDirectory.Visible = false;
             this.buttonFind.Text = "Start search";
             timerGrid.Enabled = false;
+            timerGrid_Tick(sender, null);
         }
 
         private void buttonOpenHex_Click(object sender, EventArgs e)
@@ -636,10 +649,19 @@ namespace CNRService.StreamsFinder
                 {
                     if (s.Name == streamname)
                     {
-                        DynamicFileByteProvider dfbp = 
-                            new DynamicFileByteProvider(s.Open(FileMode.Open));
-                        he.hexBoxFileContent.ByteProvider = dfbp;
-                        he.ShowDialog();
+                        using(FileStream fs = s.Open(FileMode.Open))
+                        {
+                            if (fs == null)
+                            {
+                                MessageBox.Show("Accessing acquired file failed, " +
+                                    "maybe you have insufficient rights or the file is in use.",
+                                    "Access failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                            he.fileStream = fs;
+                            he.hexBoxFileContent.ByteProvider = new DynamicFileByteProvider(fs);
+                            he.ShowDialog();
+                        }
                     }
                 }
             }
@@ -648,9 +670,58 @@ namespace CNRService.StreamsFinder
         private void dataGridResult_SelectionChanged(object sender, EventArgs e)
         {
             if (ArrayFileInfo.Count > 0)
+            {
+                buttonSelectAll.Enabled = true;
+                buttonRemoveSelected.Enabled = true;
                 buttonOpenHex.Enabled = true;
+                buttonExport.Enabled = true;
+            }
             else
+            {
                 buttonOpenHex.Enabled = false;
+                buttonExport.Enabled = false;
+                buttonSelectAll.Enabled = false;
+                buttonRemoveSelected.Enabled = false;
+            }
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow item in dataGridResult.SelectedRows)
+            {
+                string filename = fileInfoDataStreams.FileInfo[item.Index].File_Name;
+                string streamname = fileInfoDataStreams.FileInfo[item.Index].Stream_Name;
+
+                NTFS.FileStreams FS = new NTFS.FileStreams(filename);
+
+                foreach (NTFS.StreamInfo s in FS)
+                {
+                    if (s.Name == streamname)
+                    {
+                        if (saveFileDialogExport.ShowDialog() == DialogResult.OK)
+                        {
+                            using (FileStream input = s.Open(FileMode.Open))
+                            {
+                                using (FileStream output = 
+                                    new FileStream(saveFileDialogExport.FileName, FileMode.Create))
+                                {
+                                    int bufferSize = 4096;
+                                    byte[] buffer = new byte[bufferSize];
+                                    while (true)
+                                    {
+                                        int read = input.Read(buffer, 0, buffer.Length);
+                                        if (read <= 0)
+                                        {
+                                            return;
+                                        }
+                                        output.Write(buffer, 0, read);
+                                    }
+                                }
+                            }
+                        }                        
+                    }
+                }
+            }
         }
     }
 }

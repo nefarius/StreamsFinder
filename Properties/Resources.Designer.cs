@@ -73,5 +73,12 @@ namespace CNRService.StreamsFinder.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap _1306339539_export {
+            get {
+                object obj = ResourceManager.GetObject("1306339539_export", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
