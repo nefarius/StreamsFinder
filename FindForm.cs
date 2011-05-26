@@ -442,19 +442,37 @@ namespace CNRService.StreamsFinder
 
         private void buttonFind_Click(object sender, System.EventArgs e)
         {
+            // If stop is clicked and worker is busy, send a kill signal
             if (backgroundWorkerScan.IsBusy)
             {
                 backgroundWorkerScan.CancelAsync();
             }
 
+            // Change search button caption and visibility of additional buttons
             if (this.buttonFind.Text == "Stop search")
             {
                 this.buttonFind.Text = "Start search";
                 labelDirectory.Visible = false;
                 labelCurrentDirectory.Visible = false;
             }
-            else
+            else // Start search:
             {
+                foreach (DriveInfo drive in DriveInfo.GetDrives())
+                {
+                    if (textBoxFind.Text.Substring(0, 3).ToLower().Contains(drive.Name.ToLower()))
+                    {
+                        if (!drive.DriveFormat.ToUpper().Equals("NTFS"))
+                        {
+                            MessageBox.Show("The selected Drive \"" + drive.Name + "\" " + 
+                                "is formated with " + drive.DriveFormat + 
+                                ", you won't find any streams here.",
+                                "Wrong file system", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                            return;
+                        }
+                    }
+                }
+
                 this.buttonFind.Text = "Stop search";
 
                 lastIndexAdded = 0;
@@ -511,12 +529,22 @@ namespace CNRService.StreamsFinder
             }
         }
 
+        /// <summary>
+        /// Displays a directory browser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonBrowse_Click(object sender, System.EventArgs e)
         {
             if (this.folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 this.textBoxFind.Text = this.folderBrowserDialog1.SelectedPath;
         }
 
+        /// <summary>
+        /// Updates the data grid with the found streams.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timerGrid_Tick(object sender, System.EventArgs e)
         {
             this.timerGrid.Enabled = false;
@@ -541,7 +569,15 @@ namespace CNRService.StreamsFinder
             this.timerGrid.Enabled = true;
         }
 
+        /// <summary>
+        /// Thread-safe report call.
+        /// </summary>
+        /// <param name="dirname"></param>
         private delegate void ReportDirNameCallback(String dirname);
+        /// <summary>
+        /// Updates the current directory display label.
+        /// </summary>
+        /// <param name="dirname"></param>
         private void ReportDirName(string dirname)
         {
             if (labelCurrentDirectory.InvokeRequired)
@@ -555,11 +591,21 @@ namespace CNRService.StreamsFinder
             }
         }
 
+        /// <summary>
+        /// Selects everything in the data grid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSelectAll_Click(object sender, EventArgs e)
         {
             dataGridResult.SelectAll();
         }
 
+        /// <summary>
+        /// Removes the selected entries and streams from the filesystem.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonRemoveSelected_Click(object sender, EventArgs e)
         {
             string msg = "Do you want to delete the selected Streams?";
@@ -567,7 +613,7 @@ namespace CNRService.StreamsFinder
             if (MessageBox.Show(msg, "Delete Streams",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                ArrayList removeRows = new ArrayList();
+                ArrayList rowsToKill = new ArrayList();
 
                 foreach (DataGridViewRow row in dataGridResult.SelectedRows)
                 {
@@ -577,19 +623,15 @@ namespace CNRService.StreamsFinder
                     NTFS.FileStreams FS = new NTFS.FileStreams(r.File_Name);
 
                     foreach (NTFS.StreamInfo s in FS)
-                    {
                         if (s.Name == r.Stream_Name)
-                        {
                             s.Delete();
-                        }
-                    }
 
-                    removeRows.Add(r);
+                    rowsToKill.Add(r);
                 }
 
-                if (removeRows.Count > 0)
+                if (rowsToKill.Count > 0)
                 {
-                    foreach (FileInfoData.FileInfoRow fir in removeRows)
+                    foreach (FileInfoData.FileInfoRow fir in rowsToKill)
                         fir.Delete();
                     dataGridResult.Update();
                 }
@@ -601,20 +643,39 @@ namespace CNRService.StreamsFinder
             DirSearch(this.textBoxFind.Text, this.checkBoxSubFolders.Checked);
         }
 
+        /// <summary>
+        /// Updates scanning progress (found files).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void backgroundWorkerScan_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
             labelFoundItems.Text = e.ProgressPercentage.ToString();
         }
 
+        /// <summary>
+        /// Called if worked finished his job.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void backgroundWorkerScan_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             labelDirectory.Visible = false;
             labelCurrentDirectory.Visible = false;
             this.buttonFind.Text = "Start search";
             timerGrid.Enabled = false;
+            /*
+            This call is necessary to update the grid 
+            if the scan finished before the first tick could appear.
+            */
             timerGrid_Tick(sender, null);
         }
 
+        /// <summary>
+        /// Launches the hex editor to display the files' content.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonOpenHex_Click(object sender, EventArgs e)
         {
             HexEditor he = new HexEditor();
@@ -639,6 +700,7 @@ namespace CNRService.StreamsFinder
                                     "Access failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
+
                             he.fileStream = fs;
                             he.hexBoxFileContent.ByteProvider = new DynamicFileByteProvider(fs);
                             he.ShowDialog();
@@ -646,8 +708,16 @@ namespace CNRService.StreamsFinder
                     }
                 }
             }
+
+            he.Dispose();
+            he = null;
         }
 
+        /// <summary>
+        /// Called if the row selection is changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridResult_SelectionChanged(object sender, EventArgs e)
         {
             if (ArrayFileInfo.Count > 0)
@@ -666,6 +736,11 @@ namespace CNRService.StreamsFinder
             }
         }
 
+        /// <summary>
+        /// Exports selected stream to file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonExport_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow item in dataGridResult.SelectedRows)
