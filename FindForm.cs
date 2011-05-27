@@ -69,13 +69,13 @@ namespace CNRService.StreamsFinder
         private StatusStrip statusStripInfo;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripStatusLabel labelFoundItems;
+        private Button buttonExport;
+        private SaveFileDialog saveFileDialogExport;
         private DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn streamNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn streamSizeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn creationDateDataGridViewTextBoxColumn;
-        private Button buttonExport;
-        private SaveFileDialog saveFileDialogExport;
         private int lastIndexAdded = 0;
 
         public FindForm()
@@ -114,6 +114,7 @@ namespace CNRService.StreamsFinder
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindForm));
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonExport = new System.Windows.Forms.Button();
             this.buttonOpenHex = new System.Windows.Forms.Button();
             this.labelDirectory = new System.Windows.Forms.Label();
             this.labelCurrentDirectory = new System.Windows.Forms.Label();
@@ -133,13 +134,12 @@ namespace CNRService.StreamsFinder
             this.statusStripInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelFoundItems = new System.Windows.Forms.ToolStripStatusLabel();
+            this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
             this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.streamNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.streamSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.creationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonExport = new System.Windows.Forms.Button();
-            this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
@@ -174,6 +174,18 @@ namespace CNRService.StreamsFinder
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(792, 112);
             this.panel1.TabIndex = 1;
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonExport.Enabled = false;
+            this.buttonExport.Location = new System.Drawing.Point(511, 64);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(89, 23);
+            this.buttonExport.TabIndex = 12;
+            this.buttonExport.Text = "Export to file...";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // buttonOpenHex
             // 
@@ -319,7 +331,7 @@ namespace CNRService.StreamsFinder
             this.dataGridResult.Name = "dataGridResult";
             this.dataGridResult.ReadOnly = true;
             this.dataGridResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridResult.Size = new System.Drawing.Size(792, 451);
+            this.dataGridResult.Size = new System.Drawing.Size(792, 429);
             this.dataGridResult.TabIndex = 4;
             this.dataGridResult.SelectionChanged += new System.EventHandler(this.dataGridResult_SelectionChanged);
             // 
@@ -350,6 +362,10 @@ namespace CNRService.StreamsFinder
             this.labelFoundItems.Name = "labelFoundItems";
             this.labelFoundItems.Size = new System.Drawing.Size(13, 17);
             this.labelFoundItems.Text = "0";
+            // 
+            // saveFileDialogExport
+            // 
+            this.saveFileDialogExport.Filter = "All files|*.*";
             // 
             // fileNameDataGridViewTextBoxColumn
             // 
@@ -386,29 +402,14 @@ namespace CNRService.StreamsFinder
             this.creationDateDataGridViewTextBoxColumn.HeaderText = "Creation Date";
             this.creationDateDataGridViewTextBoxColumn.Name = "creationDateDataGridViewTextBoxColumn";
             this.creationDateDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // buttonExport
-            // 
-            this.buttonExport.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonExport.Enabled = false;
-            this.buttonExport.Location = new System.Drawing.Point(511, 64);
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(89, 23);
-            this.buttonExport.TabIndex = 12;
-            this.buttonExport.Text = "Export to file...";
-            this.buttonExport.UseVisualStyleBackColor = true;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
-            // 
-            // saveFileDialogExport
-            // 
-            this.saveFileDialogExport.Filter = "All files|*.*";
+            this.creationDateDataGridViewTextBoxColumn.Width = 99;
             // 
             // FindForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(792, 566);
-            this.Controls.Add(this.statusStripInfo);
             this.Controls.Add(this.dataGridResult);
+            this.Controls.Add(this.statusStripInfo);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -602,7 +603,7 @@ namespace CNRService.StreamsFinder
         }
 
         /// <summary>
-        /// Removes the selected entries and streams from the filesystem.
+        /// Removes the selected entries and streams from the file system.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
