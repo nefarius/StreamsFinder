@@ -36,7 +36,7 @@ namespace CNRService.StreamsFinder
     public class FindForm : System.Windows.Forms.Form
     {
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonFind;
         private System.Windows.Forms.TextBox textBoxFind;
@@ -124,7 +124,7 @@ namespace CNRService.StreamsFinder
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.buttonFind = new System.Windows.Forms.Button();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.timerGrid = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
@@ -537,8 +537,8 @@ namespace CNRService.StreamsFinder
         /// <param name="e"></param>
         private void buttonBrowse_Click(object sender, System.EventArgs e)
         {
-            if (this.folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-                this.textBoxFind.Text = this.folderBrowserDialog1.SelectedPath;
+            if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                this.textBoxFind.Text = this.folderBrowserDialog.SelectedPath;
         }
 
         /// <summary>
