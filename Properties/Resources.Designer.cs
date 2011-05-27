@@ -80,5 +80,12 @@ namespace CNRService.StreamsFinder.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap _1306514738_edit_clear {
+            get {
+                object obj = ResourceManager.GetObject("1306514738_edit-clear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

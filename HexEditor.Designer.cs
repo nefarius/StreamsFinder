@@ -32,6 +32,7 @@
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonEmpty = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +54,7 @@
             // 
             this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonSave,
+            this.toolStripButtonEmpty,
             this.toolStripButtonClose});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
@@ -80,6 +82,16 @@
             this.toolStripButtonClose.Text = "Close window";
             this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
             // 
+            // toolStripButtonEmpty
+            // 
+            this.toolStripButtonEmpty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEmpty.Image = global::CNRService.StreamsFinder.Properties.Resources._1306514738_edit_clear;
+            this.toolStripButtonEmpty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEmpty.Name = "toolStripButtonEmpty";
+            this.toolStripButtonEmpty.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonEmpty.Text = "Clear content";
+            this.toolStripButtonEmpty.Click += new System.EventHandler(this.toolStripButtonEmpty_Click);
+            // 
             // HexEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -89,6 +101,7 @@
             this.Controls.Add(this.hexBoxFileContent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "HexEditor";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "HexEditor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HexEditor_FormClosing);
@@ -105,6 +118,7 @@
         private System.Windows.Forms.ToolStrip toolStripMenu;
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripButton toolStripButtonClose;
+        private System.Windows.Forms.ToolStripButton toolStripButtonEmpty;
 
     }
 }

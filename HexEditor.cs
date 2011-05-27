@@ -30,7 +30,13 @@ namespace CNRService.StreamsFinder
 
         private void HexEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // TODO: ???
+        }
 
+        private void toolStripButtonEmpty_Click(object sender, EventArgs e)
+        {
+            hexBoxFileContent.ByteProvider.DeleteBytes(0, hexBoxFileContent.ByteProvider.Length);
+            hexBoxFileContent.Refresh();
         }
     }
 }
