@@ -76,6 +76,7 @@ namespace CNRService.StreamsFinder
         private DataGridViewTextBoxColumn streamSizeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn creationDateDataGridViewTextBoxColumn;
+        private LinkLabel linkLabelAbout;
         private int lastIndexAdded = 0;
 
         public FindForm()
@@ -128,9 +129,7 @@ namespace CNRService.StreamsFinder
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.timerGrid = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
-            this.fileInfoDataStreams = new CNRService.StreamsFinder.FileInfoData();
             this.dataGridResult = new System.Windows.Forms.DataGridView();
-            this.fileInfoData1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusStripInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelFoundItems = new System.Windows.Forms.ToolStripStatusLabel();
@@ -140,11 +139,14 @@ namespace CNRService.StreamsFinder
             this.streamSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.creationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileInfoData1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.fileInfoDataStreams = new CNRService.StreamsFinder.FileInfoData();
+            this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).BeginInit();
             this.statusStripInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxFind
@@ -158,6 +160,7 @@ namespace CNRService.StreamsFinder
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel1.Controls.Add(this.linkLabelAbout);
             this.panel1.Controls.Add(this.buttonExport);
             this.panel1.Controls.Add(this.buttonOpenHex);
             this.panel1.Controls.Add(this.labelDirectory);
@@ -305,12 +308,6 @@ namespace CNRService.StreamsFinder
             this.backgroundWorkerScan.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerScan_ProgressChanged);
             this.backgroundWorkerScan.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerScan_RunWorkerCompleted);
             // 
-            // fileInfoDataStreams
-            // 
-            this.fileInfoDataStreams.DataSetName = "FileInfoData";
-            this.fileInfoDataStreams.Locale = new System.Globalization.CultureInfo("en-US");
-            this.fileInfoDataStreams.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // dataGridResult
             // 
             this.dataGridResult.AllowUserToAddRows = false;
@@ -334,11 +331,6 @@ namespace CNRService.StreamsFinder
             this.dataGridResult.Size = new System.Drawing.Size(792, 429);
             this.dataGridResult.TabIndex = 4;
             this.dataGridResult.SelectionChanged += new System.EventHandler(this.dataGridResult_SelectionChanged);
-            // 
-            // fileInfoData1BindingSource
-            // 
-            this.fileInfoData1BindingSource.DataSource = this.fileInfoDataStreams;
-            this.fileInfoData1BindingSource.Position = 0;
             // 
             // statusStripInfo
             // 
@@ -404,6 +396,29 @@ namespace CNRService.StreamsFinder
             this.creationDateDataGridViewTextBoxColumn.ReadOnly = true;
             this.creationDateDataGridViewTextBoxColumn.Width = 99;
             // 
+            // fileInfoData1BindingSource
+            // 
+            this.fileInfoData1BindingSource.DataSource = this.fileInfoDataStreams;
+            this.fileInfoData1BindingSource.Position = 0;
+            // 
+            // fileInfoDataStreams
+            // 
+            this.fileInfoDataStreams.DataSetName = "FileInfoData";
+            this.fileInfoDataStreams.Locale = new System.Globalization.CultureInfo("en-US");
+            this.fileInfoDataStreams.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // linkLabelAbout
+            // 
+            this.linkLabelAbout.AutoSize = true;
+            this.linkLabelAbout.LinkColor = System.Drawing.Color.White;
+            this.linkLabelAbout.Location = new System.Drawing.Point(736, 8);
+            this.linkLabelAbout.Name = "linkLabelAbout";
+            this.linkLabelAbout.Size = new System.Drawing.Size(44, 13);
+            this.linkLabelAbout.TabIndex = 13;
+            this.linkLabelAbout.TabStop = true;
+            this.linkLabelAbout.Text = "About...";
+            this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
+            // 
             // FindForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -419,11 +434,11 @@ namespace CNRService.StreamsFinder
             this.Text = "NTFS Stream Scanner and Editor";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).EndInit();
             this.statusStripInfo.ResumeLayout(false);
             this.statusStripInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -779,6 +794,11 @@ namespace CNRService.StreamsFinder
                     }
                 }
             }
+        }
+
+        private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new AboutBox().ShowDialog();
         }
     }
 }
