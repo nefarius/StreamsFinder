@@ -19,16 +19,13 @@ namespace CNRService.StreamsFinder
         private System.Windows.Forms.Timer timerGrid;
         private System.Windows.Forms.CheckBox checkBoxSubFolders;
         private Button buttonSelectAll;
-        private Button buttonRemoveSelected;
         private Label labelCurrentDirectory;
         private Label labelDirectory;
-        private Button buttonOpenHex;
         private DataGridView dataGridResult;
         private BindingSource fileInfoData1BindingSource;
         private StatusStrip statusStripInfo;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripStatusLabel labelFoundItems;
-        private Button buttonExport;
         private SaveFileDialog saveFileDialogExport;
         private DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn streamNameDataGridViewTextBoxColumn;
@@ -56,11 +53,8 @@ namespace CNRService.StreamsFinder
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
-            this.buttonExport = new System.Windows.Forms.Button();
-            this.buttonOpenHex = new System.Windows.Forms.Button();
             this.labelDirectory = new System.Windows.Forms.Label();
             this.labelCurrentDirectory = new System.Windows.Forms.Label();
-            this.buttonRemoveSelected = new System.Windows.Forms.Button();
             this.buttonSelectAll = new System.Windows.Forms.Button();
             this.checkBoxSubFolders = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -104,11 +98,8 @@ namespace CNRService.StreamsFinder
             // 
             this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.panel1.Controls.Add(this.linkLabelAbout);
-            this.panel1.Controls.Add(this.buttonExport);
-            this.panel1.Controls.Add(this.buttonOpenHex);
             this.panel1.Controls.Add(this.labelDirectory);
             this.panel1.Controls.Add(this.labelCurrentDirectory);
-            this.panel1.Controls.Add(this.buttonRemoveSelected);
             this.panel1.Controls.Add(this.buttonSelectAll);
             this.panel1.Controls.Add(this.checkBoxSubFolders);
             this.panel1.Controls.Add(this.label1);
@@ -133,30 +124,6 @@ namespace CNRService.StreamsFinder
             this.linkLabelAbout.Text = "About...";
             this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
             // 
-            // buttonExport
-            // 
-            this.buttonExport.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonExport.Enabled = false;
-            this.buttonExport.Location = new System.Drawing.Point(511, 64);
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(89, 23);
-            this.buttonExport.TabIndex = 12;
-            this.buttonExport.Text = "Export to file...";
-            this.buttonExport.UseVisualStyleBackColor = true;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
-            // 
-            // buttonOpenHex
-            // 
-            this.buttonOpenHex.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonOpenHex.Enabled = false;
-            this.buttonOpenHex.Location = new System.Drawing.Point(366, 64);
-            this.buttonOpenHex.Name = "buttonOpenHex";
-            this.buttonOpenHex.Size = new System.Drawing.Size(139, 23);
-            this.buttonOpenHex.TabIndex = 11;
-            this.buttonOpenHex.Text = "Open file in Hex-Editor...";
-            this.buttonOpenHex.UseVisualStyleBackColor = true;
-            this.buttonOpenHex.Click += new System.EventHandler(this.buttonOpenHex_Click);
-            // 
             // labelDirectory
             // 
             this.labelDirectory.AutoSize = true;
@@ -175,18 +142,6 @@ namespace CNRService.StreamsFinder
             this.labelCurrentDirectory.Size = new System.Drawing.Size(671, 19);
             this.labelCurrentDirectory.TabIndex = 9;
             this.labelCurrentDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // buttonRemoveSelected
-            // 
-            this.buttonRemoveSelected.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonRemoveSelected.Enabled = false;
-            this.buttonRemoveSelected.Location = new System.Drawing.Point(207, 64);
-            this.buttonRemoveSelected.Name = "buttonRemoveSelected";
-            this.buttonRemoveSelected.Size = new System.Drawing.Size(153, 23);
-            this.buttonRemoveSelected.TabIndex = 8;
-            this.buttonRemoveSelected.Text = "Remove selected streams...";
-            this.buttonRemoveSelected.UseVisualStyleBackColor = true;
-            this.buttonRemoveSelected.Click += new System.EventHandler(this.buttonRemoveSelected_Click);
             // 
             // buttonSelectAll
             // 
@@ -374,9 +329,11 @@ namespace CNRService.StreamsFinder
             // 
             // exportStreamToFileToolStripMenuItem
             // 
+            this.exportStreamToFileToolStripMenuItem.Image = global::CNRService.StreamsFinder.Properties.Resources._1306339539_export;
             this.exportStreamToFileToolStripMenuItem.Name = "exportStreamToFileToolStripMenuItem";
             this.exportStreamToFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.exportStreamToFileToolStripMenuItem.Text = "Export stream to file...";
+            this.exportStreamToFileToolStripMenuItem.Click += new System.EventHandler(this.exportStreamToFileToolStripMenuItem_Click);
             // 
             // FindForm
             // 

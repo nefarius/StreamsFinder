@@ -24,10 +24,10 @@
 using System;
 using System.Collections;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Be.Windows.Forms;
-using System.Drawing;
 
 namespace CNRService.StreamsFinder
 {
@@ -221,43 +221,6 @@ namespace CNRService.StreamsFinder
             dataGridResult.SelectAll();
         }
 
-        /// <summary>
-        /// Removes the selected entries and streams from the file system.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonRemoveSelected_Click(object sender, EventArgs e)
-        {
-            string msg = "Do you want to delete the selected Streams?";
-
-            if (MessageBox.Show(msg, "Delete Streams",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                ArrayList rowsToKill = new ArrayList();
-
-                foreach (DataGridViewRow row in dataGridResult.SelectedRows)
-                {
-                    FileInfoData.FileInfoRow r = 
-                        (FileInfoData.FileInfoRow)fileInfoDataStreams.FileInfo[row.Index];
-
-                    NTFS.FileStreams FS = new NTFS.FileStreams(r.File_Name);
-
-                    foreach (NTFS.StreamInfo s in FS)
-                        if (s.Name == r.Stream_Name)
-                            s.Delete();
-
-                    rowsToKill.Add(r);
-                }
-
-                if (rowsToKill.Count > 0)
-                {
-                    foreach (FileInfoData.FileInfoRow fir in rowsToKill)
-                        fir.Delete();
-                    dataGridResult.Update();
-                }
-            }
-        }
-
         private void backgroundWorkerScan_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             DirSearch(this.textBoxFind.Text, this.checkBoxSubFolders.Checked);
@@ -292,16 +255,6 @@ namespace CNRService.StreamsFinder
         }
 
         /// <summary>
-        /// Launches the hex editor to display the files' content.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonOpenHex_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        /// <summary>
         /// Called if the row selection is changed.
         /// </summary>
         /// <param name="sender"></param>
@@ -311,68 +264,24 @@ namespace CNRService.StreamsFinder
             if (ArrayFileInfo.Count > 0)
             {
                 buttonSelectAll.Enabled = true;
-                buttonRemoveSelected.Enabled = true;
-                buttonOpenHex.Enabled = true;
-                buttonExport.Enabled = true;
-            }
-            else
-            {
-                buttonOpenHex.Enabled = false;
-                buttonExport.Enabled = false;
-                buttonSelectAll.Enabled = false;
-                buttonRemoveSelected.Enabled = false;
             }
         }
 
         /// <summary>
-        /// Exports selected stream to file.
+        /// Show about box.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonExport_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow item in dataGridResult.SelectedRows)
-            {
-                string filename = fileInfoDataStreams.FileInfo[item.Index].File_Name;
-                string streamname = fileInfoDataStreams.FileInfo[item.Index].Stream_Name;
-
-                NTFS.FileStreams FS = new NTFS.FileStreams(filename);
-
-                foreach (NTFS.StreamInfo s in FS)
-                {
-                    if (s.Name == streamname)
-                    {
-                        if (saveFileDialogExport.ShowDialog() == DialogResult.OK)
-                        {
-                            using (FileStream input = s.Open(FileMode.Open))
-                            {
-                                using (FileStream output = 
-                                    new FileStream(saveFileDialogExport.FileName, FileMode.Create))
-                                {
-                                    int bufferSize = 4096;
-                                    byte[] buffer = new byte[bufferSize];
-                                    while (true)
-                                    {
-                                        int read = input.Read(buffer, 0, buffer.Length);
-                                        if (read <= 0)
-                                        {
-                                            return;
-                                        }
-                                        output.Write(buffer, 0, read);
-                                    }
-                                }
-                            }
-                        }                        
-                    }
-                }
-            }
-        }
-
         private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             new AboutBox().ShowDialog();
         }
 
+        /// <summary>
+        /// If the user deletes one or more rows, delete the streams on the file system.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridResult_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             DataRowView drv = e.Row.DataBoundItem as DataRowView;
@@ -384,6 +293,11 @@ namespace CNRService.StreamsFinder
                     s.Delete();
         }
 
+        /// <summary>
+        /// Opens hex editor on row double click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridResult_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = sender as DataGridView;
@@ -421,6 +335,11 @@ namespace CNRService.StreamsFinder
             he = null;
         }
 
+        /// <summary>
+        /// Selects a row and displays a context menu with stream actions.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridResult_MouseUp(object sender, MouseEventArgs e)
         {
             DataGridView.HitTestInfo hitTestInfo;
@@ -429,7 +348,7 @@ namespace CNRService.StreamsFinder
             if (e.Button == MouseButtons.Right)
             {
                 hitTestInfo = dgv.HitTest(e.X, e.Y);
-                // If column is first column
+
                 if (hitTestInfo.Type == DataGridViewHitTestType.Cell)
                 {
                     foreach (DataGridViewCell cell in dgv.SelectedCells)
@@ -437,6 +356,46 @@ namespace CNRService.StreamsFinder
 
                     dgv.Rows[hitTestInfo.RowIndex].Selected = true;
                     contextMenuStripGrid.Show(dgv, new Point(e.X, e.Y));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Exports a streams' content to a file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exportStreamToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataRowView drv = dataGridResult.SelectedRows[0].DataBoundItem as DataRowView;
+            FileInfoData.FileInfoRow fir = drv.Row as FileInfoData.FileInfoRow;
+            NTFS.FileStreams FS = new NTFS.FileStreams(fir.File_Name);
+
+            foreach (NTFS.StreamInfo s in FS)
+            {
+                if (s.Name == fir.Stream_Name)
+                {
+                    if (saveFileDialogExport.ShowDialog() == DialogResult.OK)
+                    {
+                        using (FileStream input = s.Open(FileMode.Open))
+                        {
+                            using (FileStream output =
+                                new FileStream(saveFileDialogExport.FileName, FileMode.Create))
+                            {
+                                int bufferSize = 4096;
+                                byte[] buffer = new byte[bufferSize];
+                                while (true)
+                                {
+                                    int read = input.Read(buffer, 0, buffer.Length);
+                                    if (read <= 0)
+                                    {
+                                        return;
+                                    }
+                                    output.Write(buffer, 0, read);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
