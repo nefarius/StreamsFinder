@@ -18,7 +18,6 @@ namespace CNRService.StreamsFinder
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Timer timerGrid;
         private System.Windows.Forms.CheckBox checkBoxSubFolders;
-        private Button buttonSelectAll;
         private Label labelCurrentDirectory;
         private Label labelDirectory;
         private DataGridView dataGridResult;
@@ -27,11 +26,6 @@ namespace CNRService.StreamsFinder
         private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripStatusLabel labelFoundItems;
         private SaveFileDialog saveFileDialogExport;
-        private DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn streamNameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn streamSizeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn creationDateDataGridViewTextBoxColumn;
         private LinkLabel linkLabelAbout;
         private System.ComponentModel.IContainer components;
         private CNRService.StreamsFinder.FileInfoData fileInfoDataStreams;
@@ -55,7 +49,6 @@ namespace CNRService.StreamsFinder
             this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.labelDirectory = new System.Windows.Forms.Label();
             this.labelCurrentDirectory = new System.Windows.Forms.Label();
-            this.buttonSelectAll = new System.Windows.Forms.Button();
             this.checkBoxSubFolders = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBrowse = new System.Windows.Forms.Button();
@@ -65,11 +58,6 @@ namespace CNRService.StreamsFinder
             this.timerGrid = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
             this.dataGridResult = new System.Windows.Forms.DataGridView();
-            this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.streamNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.streamSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.creationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileInfoData1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fileInfoDataStreams = new CNRService.StreamsFinder.FileInfoData();
             this.statusStripInfo = new System.Windows.Forms.StatusStrip();
@@ -78,6 +66,12 @@ namespace CNRService.StreamsFinder
             this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
             this.contextMenuStripGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exportStreamToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.labelUsageInfo = new System.Windows.Forms.Label();
+            this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.streamNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.streamSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.creationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).BeginInit();
@@ -97,10 +91,10 @@ namespace CNRService.StreamsFinder
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel1.Controls.Add(this.labelUsageInfo);
             this.panel1.Controls.Add(this.linkLabelAbout);
             this.panel1.Controls.Add(this.labelDirectory);
             this.panel1.Controls.Add(this.labelCurrentDirectory);
-            this.panel1.Controls.Add(this.buttonSelectAll);
             this.panel1.Controls.Add(this.checkBoxSubFolders);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.buttonBrowse);
@@ -109,14 +103,14 @@ namespace CNRService.StreamsFinder
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(792, 112);
+            this.panel1.Size = new System.Drawing.Size(814, 112);
             this.panel1.TabIndex = 1;
             // 
             // linkLabelAbout
             // 
             this.linkLabelAbout.AutoSize = true;
             this.linkLabelAbout.LinkColor = System.Drawing.Color.White;
-            this.linkLabelAbout.Location = new System.Drawing.Point(736, 8);
+            this.linkLabelAbout.Location = new System.Drawing.Point(758, 9);
             this.linkLabelAbout.Name = "linkLabelAbout";
             this.linkLabelAbout.Size = new System.Drawing.Size(44, 13);
             this.linkLabelAbout.TabIndex = 13;
@@ -127,7 +121,7 @@ namespace CNRService.StreamsFinder
             // labelDirectory
             // 
             this.labelDirectory.AutoSize = true;
-            this.labelDirectory.Location = new System.Drawing.Point(16, 93);
+            this.labelDirectory.Location = new System.Drawing.Point(97, 69);
             this.labelDirectory.Name = "labelDirectory";
             this.labelDirectory.Size = new System.Drawing.Size(87, 13);
             this.labelDirectory.TabIndex = 10;
@@ -137,23 +131,11 @@ namespace CNRService.StreamsFinder
             // labelCurrentDirectory
             // 
             this.labelCurrentDirectory.AutoEllipsis = true;
-            this.labelCurrentDirectory.Location = new System.Drawing.Point(109, 90);
+            this.labelCurrentDirectory.Location = new System.Drawing.Point(190, 66);
             this.labelCurrentDirectory.Name = "labelCurrentDirectory";
-            this.labelCurrentDirectory.Size = new System.Drawing.Size(671, 19);
+            this.labelCurrentDirectory.Size = new System.Drawing.Size(590, 19);
             this.labelCurrentDirectory.TabIndex = 9;
             this.labelCurrentDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // buttonSelectAll
-            // 
-            this.buttonSelectAll.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonSelectAll.Enabled = false;
-            this.buttonSelectAll.Location = new System.Drawing.Point(97, 64);
-            this.buttonSelectAll.Name = "buttonSelectAll";
-            this.buttonSelectAll.Size = new System.Drawing.Size(104, 23);
-            this.buttonSelectAll.TabIndex = 7;
-            this.buttonSelectAll.Text = "Select all streams";
-            this.buttonSelectAll.UseVisualStyleBackColor = true;
-            this.buttonSelectAll.Click += new System.EventHandler(this.buttonSelectAll_Click);
             // 
             // checkBoxSubFolders
             // 
@@ -201,7 +183,7 @@ namespace CNRService.StreamsFinder
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
             this.splitter1.Location = new System.Drawing.Point(0, 112);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(792, 3);
+            this.splitter1.Size = new System.Drawing.Size(814, 3);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -238,12 +220,76 @@ namespace CNRService.StreamsFinder
             this.dataGridResult.Name = "dataGridResult";
             this.dataGridResult.ReadOnly = true;
             this.dataGridResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridResult.Size = new System.Drawing.Size(792, 429);
+            this.dataGridResult.Size = new System.Drawing.Size(814, 429);
             this.dataGridResult.TabIndex = 4;
             this.dataGridResult.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridResult_CellDoubleClick);
-            this.dataGridResult.SelectionChanged += new System.EventHandler(this.dataGridResult_SelectionChanged);
             this.dataGridResult.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridResult_UserDeletingRow);
             this.dataGridResult.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridResult_MouseUp);
+            // 
+            // fileInfoData1BindingSource
+            // 
+            this.fileInfoData1BindingSource.DataSource = this.fileInfoDataStreams;
+            this.fileInfoData1BindingSource.Position = 0;
+            // 
+            // fileInfoDataStreams
+            // 
+            this.fileInfoDataStreams.DataSetName = "FileInfoData";
+            this.fileInfoDataStreams.Locale = new System.Globalization.CultureInfo("en-US");
+            this.fileInfoDataStreams.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // statusStripInfo
+            // 
+            this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.labelFoundItems});
+            this.statusStripInfo.Location = new System.Drawing.Point(0, 544);
+            this.statusStripInfo.Name = "statusStripInfo";
+            this.statusStripInfo.Size = new System.Drawing.Size(814, 22);
+            this.statusStripInfo.TabIndex = 5;
+            this.statusStripInfo.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(87, 17);
+            this.toolStripStatusLabel1.Text = "Streams found:";
+            // 
+            // labelFoundItems
+            // 
+            this.labelFoundItems.Name = "labelFoundItems";
+            this.labelFoundItems.Size = new System.Drawing.Size(13, 17);
+            this.labelFoundItems.Text = "0";
+            // 
+            // saveFileDialogExport
+            // 
+            this.saveFileDialogExport.Filter = "All files|*.*";
+            // 
+            // contextMenuStripGrid
+            // 
+            this.contextMenuStripGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportStreamToFileToolStripMenuItem});
+            this.contextMenuStripGrid.Name = "contextMenuStripGrid";
+            this.contextMenuStripGrid.Size = new System.Drawing.Size(189, 26);
+            // 
+            // exportStreamToFileToolStripMenuItem
+            // 
+            this.exportStreamToFileToolStripMenuItem.Image = global::CNRService.StreamsFinder.Properties.Resources._1306339539_export;
+            this.exportStreamToFileToolStripMenuItem.Name = "exportStreamToFileToolStripMenuItem";
+            this.exportStreamToFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.exportStreamToFileToolStripMenuItem.Text = "Export stream to file...";
+            this.exportStreamToFileToolStripMenuItem.Click += new System.EventHandler(this.exportStreamToFileToolStripMenuItem_Click);
+            // 
+            // labelUsageInfo
+            // 
+            this.labelUsageInfo.AutoSize = true;
+            this.labelUsageInfo.Location = new System.Drawing.Point(16, 96);
+            this.labelUsageInfo.Name = "labelUsageInfo";
+            this.labelUsageInfo.Size = new System.Drawing.Size(733, 13);
+            this.labelUsageInfo.TabIndex = 14;
+            this.labelUsageInfo.Text = "Press \'Ctrl+A\' to select all streams. Use the \'Del\' key to delete one or more sel" +
+                "ected streams, double click to open in hex editor. Right click for more actions." +
+                "";
+            this.labelUsageInfo.Visible = false;
             // 
             // fileNameDataGridViewTextBoxColumn
             // 
@@ -280,71 +326,17 @@ namespace CNRService.StreamsFinder
             this.creationDateDataGridViewTextBoxColumn.HeaderText = "Creation Date";
             this.creationDateDataGridViewTextBoxColumn.Name = "creationDateDataGridViewTextBoxColumn";
             this.creationDateDataGridViewTextBoxColumn.ReadOnly = true;
-            this.creationDateDataGridViewTextBoxColumn.Width = 99;
-            // 
-            // fileInfoData1BindingSource
-            // 
-            this.fileInfoData1BindingSource.DataSource = this.fileInfoDataStreams;
-            this.fileInfoData1BindingSource.Position = 0;
-            // 
-            // fileInfoDataStreams
-            // 
-            this.fileInfoDataStreams.DataSetName = "FileInfoData";
-            this.fileInfoDataStreams.Locale = new System.Globalization.CultureInfo("en-US");
-            this.fileInfoDataStreams.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // statusStripInfo
-            // 
-            this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.labelFoundItems});
-            this.statusStripInfo.Location = new System.Drawing.Point(0, 544);
-            this.statusStripInfo.Name = "statusStripInfo";
-            this.statusStripInfo.Size = new System.Drawing.Size(792, 22);
-            this.statusStripInfo.TabIndex = 5;
-            this.statusStripInfo.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(87, 17);
-            this.toolStripStatusLabel1.Text = "Streams found:";
-            // 
-            // labelFoundItems
-            // 
-            this.labelFoundItems.Name = "labelFoundItems";
-            this.labelFoundItems.Size = new System.Drawing.Size(13, 17);
-            this.labelFoundItems.Text = "0";
-            // 
-            // saveFileDialogExport
-            // 
-            this.saveFileDialogExport.Filter = "All files|*.*";
-            // 
-            // contextMenuStripGrid
-            // 
-            this.contextMenuStripGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportStreamToFileToolStripMenuItem});
-            this.contextMenuStripGrid.Name = "contextMenuStripGrid";
-            this.contextMenuStripGrid.Size = new System.Drawing.Size(189, 26);
-            // 
-            // exportStreamToFileToolStripMenuItem
-            // 
-            this.exportStreamToFileToolStripMenuItem.Image = global::CNRService.StreamsFinder.Properties.Resources._1306339539_export;
-            this.exportStreamToFileToolStripMenuItem.Name = "exportStreamToFileToolStripMenuItem";
-            this.exportStreamToFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.exportStreamToFileToolStripMenuItem.Text = "Export stream to file...";
-            this.exportStreamToFileToolStripMenuItem.Click += new System.EventHandler(this.exportStreamToFileToolStripMenuItem_Click);
             // 
             // FindForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(792, 566);
+            this.ClientSize = new System.Drawing.Size(814, 566);
             this.Controls.Add(this.dataGridResult);
             this.Controls.Add(this.statusStripInfo);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(808, 604);
+            this.MinimumSize = new System.Drawing.Size(830, 604);
             this.Name = "FindForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NTFS Stream Scanner and Editor";
@@ -376,5 +368,11 @@ namespace CNRService.StreamsFinder
 
         private ContextMenuStrip contextMenuStripGrid;
         private ToolStripMenuItem exportStreamToFileToolStripMenuItem;
+        private Label labelUsageInfo;
+        private DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn streamNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn streamSizeDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn creationDateDataGridViewTextBoxColumn;
     }
 }

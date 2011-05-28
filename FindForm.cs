@@ -93,11 +93,12 @@ namespace CNRService.StreamsFinder
                     }
                 }
 
-                this.buttonFind.Text = "Stop search";
+                buttonFind.Text = "Stop search";
+                labelUsageInfo.Visible = true;
 
                 lastIndexAdded = 0;
                 ArrayFileInfo.Clear();
-                this.fileInfoDataStreams.FileInfo.Rows.Clear();
+                fileInfoDataStreams.FileInfo.Rows.Clear();
                 labelDirectory.Visible = true;
                 labelCurrentDirectory.Visible = true;
 
@@ -211,16 +212,6 @@ namespace CNRService.StreamsFinder
             }
         }
 
-        /// <summary>
-        /// Selects everything in the data grid.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonSelectAll_Click(object sender, EventArgs e)
-        {
-            dataGridResult.SelectAll();
-        }
-
         private void backgroundWorkerScan_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             DirSearch(this.textBoxFind.Text, this.checkBoxSubFolders.Checked);
@@ -252,19 +243,6 @@ namespace CNRService.StreamsFinder
             if the scan finished before the first tick could appear.
             */
             timerGrid_Tick(sender, null);
-        }
-
-        /// <summary>
-        /// Called if the row selection is changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridResult_SelectionChanged(object sender, EventArgs e)
-        {
-            if (ArrayFileInfo.Count > 0)
-            {
-                buttonSelectAll.Enabled = true;
-            }
         }
 
         /// <summary>
