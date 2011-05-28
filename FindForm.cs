@@ -43,6 +43,9 @@ namespace CNRService.StreamsFinder
             InitializeComponent();
 
             ArrayFileInfo = new ArrayList();
+#if DEBUG
+            textBoxFind.Text = @"E:\Downloads";
+#endif
         }
 
         /// <summary>
