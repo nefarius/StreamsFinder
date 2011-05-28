@@ -87,5 +87,26 @@ namespace CNRService.StreamsFinder.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap _1306594245_edit_cut {
+            get {
+                object obj = ResourceManager.GetObject("1306594245_edit-cut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _1306594330_page_copy {
+            get {
+                object obj = ResourceManager.GetObject("1306594330_page_copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _1306594372_clipboard_paste_document_text {
+            get {
+                object obj = ResourceManager.GetObject("1306594372_clipboard_paste_document_text", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

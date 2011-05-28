@@ -144,6 +144,9 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>FileInfoData.Designer.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\1306594372_clipboard_paste_document_text.png" />
+    <None Include="Resources\1306594330_page_copy.png" />
+    <None Include="Resources\1306594245_edit-cut.png" />
     <None Include="Resources\1306514738_edit-clear.png" />
     <None Include="Resources\1306339539_export.png" />
     <None Include="Resources\1306333379_095.png" />

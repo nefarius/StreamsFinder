@@ -38,5 +38,20 @@ namespace CNRService.StreamsFinder
             hexBoxFileContent.ByteProvider.DeleteBytes(0, hexBoxFileContent.ByteProvider.Length);
             hexBoxFileContent.Refresh();
         }
+
+        private void toolStripButtonCut_Click(object sender, EventArgs e)
+        {
+            hexBoxFileContent.Cut();
+        }
+
+        private void toolStripButtonCopy_Click(object sender, EventArgs e)
+        {
+            hexBoxFileContent.Copy();
+        }
+
+        private void toolStripButtonPaste_Click(object sender, EventArgs e)
+        {
+            hexBoxFileContent.Paste();
+        }
     }
 }

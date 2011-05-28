@@ -30,15 +30,19 @@
         {
             this.hexBoxFileContent = new Be.Windows.Forms.HexBox();
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonEmpty = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.labelFileName = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.labelStreamName = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonEmpty = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCut = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPaste = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +66,10 @@
             this.toolStripButtonSave,
             this.toolStripButtonEmpty,
             this.toolStripButtonClose,
+            this.toolStripSeparator3,
+            this.toolStripButtonCut,
+            this.toolStripButtonCopy,
+            this.toolStripButtonPaste,
             this.toolStripSeparator1,
             this.toolStripLabel2,
             this.labelStreamName,
@@ -73,36 +81,6 @@
             this.toolStripMenu.Size = new System.Drawing.Size(687, 25);
             this.toolStripMenu.TabIndex = 1;
             this.toolStripMenu.Text = "Menu";
-            // 
-            // toolStripButtonSave
-            // 
-            this.toolStripButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonSave.Image = global::CNRService.StreamsFinder.Properties.Resources._1306333379_095;
-            this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSave.Name = "toolStripButtonSave";
-            this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonSave.Text = "Save changes";
-            this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
-            // 
-            // toolStripButtonEmpty
-            // 
-            this.toolStripButtonEmpty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonEmpty.Image = global::CNRService.StreamsFinder.Properties.Resources._1306514738_edit_clear;
-            this.toolStripButtonEmpty.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEmpty.Name = "toolStripButtonEmpty";
-            this.toolStripButtonEmpty.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonEmpty.Text = "Clear content";
-            this.toolStripButtonEmpty.Click += new System.EventHandler(this.toolStripButtonEmpty_Click);
-            // 
-            // toolStripButtonClose
-            // 
-            this.toolStripButtonClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonClose.Image = global::CNRService.StreamsFinder.Properties.Resources._1306333295_cross_circle_frame;
-            this.toolStripButtonClose.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonClose.Name = "toolStripButtonClose";
-            this.toolStripButtonClose.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonClose.Text = "Close window";
-            this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
             // 
             // toolStripSeparator1
             // 
@@ -138,6 +116,71 @@
             this.labelStreamName.Size = new System.Drawing.Size(59, 22);
             this.labelStreamName.Text = "<stream>";
             // 
+            // toolStripButtonSave
+            // 
+            this.toolStripButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSave.Image = global::CNRService.StreamsFinder.Properties.Resources._1306333379_095;
+            this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSave.Name = "toolStripButtonSave";
+            this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSave.Text = "Save changes";
+            this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
+            // 
+            // toolStripButtonEmpty
+            // 
+            this.toolStripButtonEmpty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEmpty.Image = global::CNRService.StreamsFinder.Properties.Resources._1306514738_edit_clear;
+            this.toolStripButtonEmpty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEmpty.Name = "toolStripButtonEmpty";
+            this.toolStripButtonEmpty.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonEmpty.Text = "Clear content";
+            this.toolStripButtonEmpty.Click += new System.EventHandler(this.toolStripButtonEmpty_Click);
+            // 
+            // toolStripButtonClose
+            // 
+            this.toolStripButtonClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonClose.Image = global::CNRService.StreamsFinder.Properties.Resources._1306333295_cross_circle_frame;
+            this.toolStripButtonClose.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonClose.Name = "toolStripButtonClose";
+            this.toolStripButtonClose.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonClose.Text = "Close window";
+            this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
+            // 
+            // toolStripButtonCut
+            // 
+            this.toolStripButtonCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonCut.Image = global::CNRService.StreamsFinder.Properties.Resources._1306594245_edit_cut;
+            this.toolStripButtonCut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCut.Name = "toolStripButtonCut";
+            this.toolStripButtonCut.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonCut.Text = "Cut";
+            this.toolStripButtonCut.Click += new System.EventHandler(this.toolStripButtonCut_Click);
+            // 
+            // toolStripButtonCopy
+            // 
+            this.toolStripButtonCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonCopy.Image = global::CNRService.StreamsFinder.Properties.Resources._1306594330_page_copy;
+            this.toolStripButtonCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCopy.Name = "toolStripButtonCopy";
+            this.toolStripButtonCopy.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonCopy.Text = "Copy";
+            this.toolStripButtonCopy.Click += new System.EventHandler(this.toolStripButtonCopy_Click);
+            // 
+            // toolStripButtonPaste
+            // 
+            this.toolStripButtonPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPaste.Image = global::CNRService.StreamsFinder.Properties.Resources._1306594372_clipboard_paste_document_text;
+            this.toolStripButtonPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPaste.Name = "toolStripButtonPaste";
+            this.toolStripButtonPaste.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonPaste.Text = "Paste";
+            this.toolStripButtonPaste.Click += new System.EventHandler(this.toolStripButtonPaste_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
             // HexEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -171,6 +214,10 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         public System.Windows.Forms.ToolStripLabel labelStreamName;
         public System.Windows.Forms.ToolStripLabel labelFileName;
+        private System.Windows.Forms.ToolStripButton toolStripButtonCut;
+        private System.Windows.Forms.ToolStripButton toolStripButtonCopy;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPaste;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 
     }
 }
