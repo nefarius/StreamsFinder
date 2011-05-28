@@ -35,6 +35,7 @@ namespace CNRService.StreamsFinder
     /// </summary>
     public class FindForm : System.Windows.Forms.Form
     {
+        #region Designer
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Label label1;
@@ -56,7 +57,6 @@ namespace CNRService.StreamsFinder
             public System.DateTime Creation_Date;
         }
 
-        private ArrayList ArrayFileInfo;
         private System.Windows.Forms.CheckBox checkBoxSubFolders;
         private Button buttonSelectAll;
         private Button buttonRemoveSelected;
@@ -77,6 +77,9 @@ namespace CNRService.StreamsFinder
         private DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn creationDateDataGridViewTextBoxColumn;
         private LinkLabel linkLabelAbout;
+        #endregion
+
+        private ArrayList ArrayFileInfo;
         private int lastIndexAdded = 0;
 
         public FindForm()
