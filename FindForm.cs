@@ -27,6 +27,7 @@ using System.Data;
 using System.IO;
 using System.Windows.Forms;
 using Be.Windows.Forms;
+using System.Drawing;
 
 namespace CNRService.StreamsFinder
 {
@@ -297,39 +298,7 @@ namespace CNRService.StreamsFinder
         /// <param name="e"></param>
         private void buttonOpenHex_Click(object sender, EventArgs e)
         {
-            HexEditor he = new HexEditor();
             
-            foreach (DataGridViewRow item in dataGridResult.SelectedRows)
-            {
-                string filename = fileInfoDataStreams.FileInfo[item.Index].File_Name;
-                string streamname = fileInfoDataStreams.FileInfo[item.Index].Stream_Name;
-
-                NTFS.FileStreams FS = new NTFS.FileStreams(filename);
-
-                foreach (NTFS.StreamInfo s in FS)
-                {
-                    if (s.Name == streamname)
-                    {
-                        using(FileStream fs = s.Open(FileMode.Open))
-                        {
-                            if (fs == null)
-                            {
-                                MessageBox.Show("Accessing acquired file failed, " +
-                                    "maybe you have insufficient rights or the file is in use.",
-                                    "Access failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-
-                            he.fileStream = fs;
-                            he.hexBoxFileContent.ByteProvider = new DynamicFileByteProvider(fs);
-                            he.ShowDialog();
-                        }
-                    }
-                }
-            }
-
-            he.Dispose();
-            he = null;
         }
 
         /// <summary>
@@ -402,6 +371,74 @@ namespace CNRService.StreamsFinder
         private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             new AboutBox().ShowDialog();
+        }
+
+        private void dataGridResult_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            DataRowView drv = e.Row.DataBoundItem as DataRowView;
+            FileInfoData.FileInfoRow fir = drv.Row as FileInfoData.FileInfoRow;
+            NTFS.FileStreams FS = new NTFS.FileStreams(fir.File_Name);
+
+            foreach (NTFS.StreamInfo s in FS)
+                if (s.Name == fir.Stream_Name)
+                    s.Delete();
+        }
+
+        private void dataGridResult_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            DataRowView drv = dgv.Rows[e.RowIndex].DataBoundItem as DataRowView;
+            FileInfoData.FileInfoRow fir = drv.Row as FileInfoData.FileInfoRow;
+
+            HexEditor he = new HexEditor();
+
+            NTFS.FileStreams FS = new NTFS.FileStreams(fir.File_Name);
+
+            foreach (NTFS.StreamInfo s in FS)
+            {
+                if (s.Name == fir.Stream_Name)
+                {
+                    using (FileStream fs = s.Open(FileMode.Open))
+                    {
+                        if (fs == null)
+                        {
+                            MessageBox.Show("Accessing acquired file failed, " +
+                                "maybe you have insufficient rights or the file is in use.",
+                                "Access failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        he.labelFileName.Text = fir.File_Name;
+                        he.labelStreamName.Text = fir.Stream_Name;
+                        he.fileStream = fs;
+                        he.hexBoxFileContent.ByteProvider = new DynamicFileByteProvider(fs);
+                        he.ShowDialog();
+                    }
+                }
+            }
+
+            he.Dispose();
+            he = null;
+        }
+
+        private void dataGridResult_MouseUp(object sender, MouseEventArgs e)
+        {
+            DataGridView.HitTestInfo hitTestInfo;
+            DataGridView dgv = sender as DataGridView;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                hitTestInfo = dgv.HitTest(e.X, e.Y);
+                // If column is first column
+                if (hitTestInfo.Type == DataGridViewHitTestType.Cell)
+                {
+                    foreach (DataGridViewCell cell in dgv.SelectedCells)
+                        cell.Selected = false;
+
+                    dgv.Rows[hitTestInfo.RowIndex].Selected = true;
+                    contextMenuStripGrid.Show(dgv, new Point(e.X, e.Y));
+                }
+            }
         }
     }
 }

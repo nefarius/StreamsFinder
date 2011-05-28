@@ -31,8 +31,14 @@
             this.hexBoxFileContent = new Be.Windows.Forms.HexBox();
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEmpty = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.labelFileName = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.labelStreamName = new System.Windows.Forms.ToolStripLabel();
             this.toolStripMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +61,13 @@
             this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonSave,
             this.toolStripButtonEmpty,
-            this.toolStripButtonClose});
+            this.toolStripButtonClose,
+            this.toolStripSeparator1,
+            this.toolStripLabel2,
+            this.labelStreamName,
+            this.toolStripSeparator2,
+            this.toolStripLabel1,
+            this.labelFileName});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Size = new System.Drawing.Size(687, 25);
@@ -72,6 +84,16 @@
             this.toolStripButtonSave.Text = "Save changes";
             this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
             // 
+            // toolStripButtonEmpty
+            // 
+            this.toolStripButtonEmpty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEmpty.Image = global::CNRService.StreamsFinder.Properties.Resources._1306514738_edit_clear;
+            this.toolStripButtonEmpty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEmpty.Name = "toolStripButtonEmpty";
+            this.toolStripButtonEmpty.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonEmpty.Text = "Clear content";
+            this.toolStripButtonEmpty.Click += new System.EventHandler(this.toolStripButtonEmpty_Click);
+            // 
             // toolStripButtonClose
             // 
             this.toolStripButtonClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -82,15 +104,39 @@
             this.toolStripButtonClose.Text = "Close window";
             this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
             // 
-            // toolStripButtonEmpty
+            // toolStripSeparator1
             // 
-            this.toolStripButtonEmpty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonEmpty.Image = global::CNRService.StreamsFinder.Properties.Resources._1306514738_edit_clear;
-            this.toolStripButtonEmpty.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEmpty.Name = "toolStripButtonEmpty";
-            this.toolStripButtonEmpty.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonEmpty.Text = "Clear content";
-            this.toolStripButtonEmpty.Click += new System.EventHandler(this.toolStripButtonEmpty_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(28, 22);
+            this.toolStripLabel1.Text = "File:";
+            // 
+            // labelFileName
+            // 
+            this.labelFileName.Name = "labelFileName";
+            this.labelFileName.Size = new System.Drawing.Size(39, 22);
+            this.labelFileName.Text = "<file>";
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(47, 22);
+            this.toolStripLabel2.Text = "Stream:";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // labelStreamName
+            // 
+            this.labelStreamName.Name = "labelStreamName";
+            this.labelStreamName.Size = new System.Drawing.Size(59, 22);
+            this.labelStreamName.Text = "<stream>";
             // 
             // HexEditor
             // 
@@ -119,6 +165,12 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripButton toolStripButtonClose;
         private System.Windows.Forms.ToolStripButton toolStripButtonEmpty;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        public System.Windows.Forms.ToolStripLabel labelStreamName;
+        public System.Windows.Forms.ToolStripLabel labelFileName;
 
     }
 }

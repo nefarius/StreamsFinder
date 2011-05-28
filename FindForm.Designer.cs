@@ -55,6 +55,7 @@ namespace CNRService.StreamsFinder
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindForm));
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonOpenHex = new System.Windows.Forms.Button();
             this.labelDirectory = new System.Windows.Forms.Label();
@@ -70,10 +71,6 @@ namespace CNRService.StreamsFinder
             this.timerGrid = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
             this.dataGridResult = new System.Windows.Forms.DataGridView();
-            this.statusStripInfo = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.labelFoundItems = new System.Windows.Forms.ToolStripStatusLabel();
-            this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
             this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.streamNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.streamSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,12 +78,18 @@ namespace CNRService.StreamsFinder
             this.creationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileInfoData1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fileInfoDataStreams = new CNRService.StreamsFinder.FileInfoData();
-            this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
+            this.statusStripInfo = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labelFoundItems = new System.Windows.Forms.ToolStripStatusLabel();
+            this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
+            this.contextMenuStripGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exportStreamToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
-            this.statusStripInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).BeginInit();
+            this.statusStripInfo.SuspendLayout();
+            this.contextMenuStripGrid.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxFind
@@ -117,6 +120,18 @@ namespace CNRService.StreamsFinder
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(792, 112);
             this.panel1.TabIndex = 1;
+            // 
+            // linkLabelAbout
+            // 
+            this.linkLabelAbout.AutoSize = true;
+            this.linkLabelAbout.LinkColor = System.Drawing.Color.White;
+            this.linkLabelAbout.Location = new System.Drawing.Point(736, 8);
+            this.linkLabelAbout.Name = "linkLabelAbout";
+            this.linkLabelAbout.Size = new System.Drawing.Size(44, 13);
+            this.linkLabelAbout.TabIndex = 13;
+            this.linkLabelAbout.TabStop = true;
+            this.linkLabelAbout.Text = "About...";
+            this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
             // 
             // buttonExport
             // 
@@ -270,34 +285,10 @@ namespace CNRService.StreamsFinder
             this.dataGridResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridResult.Size = new System.Drawing.Size(792, 429);
             this.dataGridResult.TabIndex = 4;
+            this.dataGridResult.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridResult_CellDoubleClick);
             this.dataGridResult.SelectionChanged += new System.EventHandler(this.dataGridResult_SelectionChanged);
-            // 
-            // statusStripInfo
-            // 
-            this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.labelFoundItems});
-            this.statusStripInfo.Location = new System.Drawing.Point(0, 544);
-            this.statusStripInfo.Name = "statusStripInfo";
-            this.statusStripInfo.Size = new System.Drawing.Size(792, 22);
-            this.statusStripInfo.TabIndex = 5;
-            this.statusStripInfo.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(87, 17);
-            this.toolStripStatusLabel1.Text = "Streams found:";
-            // 
-            // labelFoundItems
-            // 
-            this.labelFoundItems.Name = "labelFoundItems";
-            this.labelFoundItems.Size = new System.Drawing.Size(13, 17);
-            this.labelFoundItems.Text = "0";
-            // 
-            // saveFileDialogExport
-            // 
-            this.saveFileDialogExport.Filter = "All files|*.*";
+            this.dataGridResult.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridResult_UserDeletingRow);
+            this.dataGridResult.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridResult_MouseUp);
             // 
             // fileNameDataGridViewTextBoxColumn
             // 
@@ -347,17 +338,45 @@ namespace CNRService.StreamsFinder
             this.fileInfoDataStreams.Locale = new System.Globalization.CultureInfo("en-US");
             this.fileInfoDataStreams.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // linkLabelAbout
+            // statusStripInfo
             // 
-            this.linkLabelAbout.AutoSize = true;
-            this.linkLabelAbout.LinkColor = System.Drawing.Color.White;
-            this.linkLabelAbout.Location = new System.Drawing.Point(736, 8);
-            this.linkLabelAbout.Name = "linkLabelAbout";
-            this.linkLabelAbout.Size = new System.Drawing.Size(44, 13);
-            this.linkLabelAbout.TabIndex = 13;
-            this.linkLabelAbout.TabStop = true;
-            this.linkLabelAbout.Text = "About...";
-            this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
+            this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.labelFoundItems});
+            this.statusStripInfo.Location = new System.Drawing.Point(0, 544);
+            this.statusStripInfo.Name = "statusStripInfo";
+            this.statusStripInfo.Size = new System.Drawing.Size(792, 22);
+            this.statusStripInfo.TabIndex = 5;
+            this.statusStripInfo.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(87, 17);
+            this.toolStripStatusLabel1.Text = "Streams found:";
+            // 
+            // labelFoundItems
+            // 
+            this.labelFoundItems.Name = "labelFoundItems";
+            this.labelFoundItems.Size = new System.Drawing.Size(13, 17);
+            this.labelFoundItems.Text = "0";
+            // 
+            // saveFileDialogExport
+            // 
+            this.saveFileDialogExport.Filter = "All files|*.*";
+            // 
+            // contextMenuStripGrid
+            // 
+            this.contextMenuStripGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportStreamToFileToolStripMenuItem});
+            this.contextMenuStripGrid.Name = "contextMenuStripGrid";
+            this.contextMenuStripGrid.Size = new System.Drawing.Size(189, 26);
+            // 
+            // exportStreamToFileToolStripMenuItem
+            // 
+            this.exportStreamToFileToolStripMenuItem.Name = "exportStreamToFileToolStripMenuItem";
+            this.exportStreamToFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.exportStreamToFileToolStripMenuItem.Text = "Export stream to file...";
             // 
             // FindForm
             // 
@@ -375,10 +394,11 @@ namespace CNRService.StreamsFinder
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).EndInit();
-            this.statusStripInfo.ResumeLayout(false);
-            this.statusStripInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).EndInit();
+            this.statusStripInfo.ResumeLayout(false);
+            this.statusStripInfo.PerformLayout();
+            this.contextMenuStripGrid.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -396,5 +416,8 @@ namespace CNRService.StreamsFinder
             }
             base.Dispose(disposing);
         }
+
+        private ContextMenuStrip contextMenuStripGrid;
+        private ToolStripMenuItem exportStreamToFileToolStripMenuItem;
     }
 }
