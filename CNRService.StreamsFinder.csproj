@@ -137,7 +137,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Content Include="1306249954_old-edit-find.ico" />
-    <Content Include="App.ico" />
     <Content Include="FileInfoData.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>FileInfoData.Designer.cs</LastGenOutput>
