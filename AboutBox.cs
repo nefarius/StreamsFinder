@@ -25,5 +25,10 @@ namespace CNRService.StreamsFinder
         {
             Process.Start("http://www.codeproject.com/KB/files/ntfsguiextension.aspx");
         }
+
+        private void linkLabelHexBox_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://sourceforge.net/projects/hexbox/");
+        }
     }
 }
