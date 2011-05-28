@@ -1,17 +1,18 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Resources;
 
 //
 // Le informazioni generali relative a un assembly sono controllate dal seguente 
 // insieme di attributi. Per modificare le informazioni associate a un assembly 
 // occorre quindi modificare i valori di questi attributi.
 //
-[assembly: AssemblyTitle("")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("NTFS Streem Scanner and Editor")]
+[assembly: AssemblyDescription("NTFS Alternative Data Stream Scanner and Editor")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Nefarius")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("CC BY-NC-SA 2.0")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
@@ -26,7 +27,7 @@ using System.Runtime.CompilerServices;
 // È possibile specificare tutti i valori o impostare come predefiniti i valori Numero revisione e Numero build 
 // utilizzando l'asterisco (*) come illustrato di seguito:
 
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.56")]
 
 //
 // Per firmare l'assembly è necessario specificare una chiave da utilizzare.
@@ -56,3 +57,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
+[assembly: NeutralResourcesLanguageAttribute("en")]
