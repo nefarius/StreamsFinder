@@ -188,7 +188,7 @@
             this.ClientSize = new System.Drawing.Size(687, 446);
             this.Controls.Add(this.toolStripMenu);
             this.Controls.Add(this.hexBoxFileContent);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "HexEditor";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
