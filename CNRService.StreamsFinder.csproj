@@ -125,6 +125,9 @@
     <Compile Include="FindForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FindForm.Designer.cs">
+      <DependentUpon>FindForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HexEditor.cs">
       <SubType>Form</SubType>
     </Compile>
