@@ -124,11 +124,17 @@
   <data name="1306594245_edit-cut" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1306594245_edit-cut.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="1307470502_application-x-executable-script" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1307470502_application-x-executable-script.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="1306514738_edit-clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1306514738_edit-clear.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="1306333295_cross_circle_frame" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1306333295_cross_circle_frame.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1306594372_clipboard_paste_document_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1306594372_clipboard_paste_document_text.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="1306339539_export" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1306339539_export.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -137,7 +143,7 @@
     <value>..\Resources\1306333379_095.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="1306594372_clipboard_paste_document_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1306594372_clipboard_paste_document_text.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="1307470595_Folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1307470595_Folder.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

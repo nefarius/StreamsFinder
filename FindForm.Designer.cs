@@ -46,6 +46,7 @@ namespace CNRService.StreamsFinder
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindForm));
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelUsageInfo = new System.Windows.Forms.Label();
             this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.labelDirectory = new System.Windows.Forms.Label();
             this.labelCurrentDirectory = new System.Windows.Forms.Label();
@@ -58,26 +59,27 @@ namespace CNRService.StreamsFinder
             this.timerGrid = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorkerScan = new System.ComponentModel.BackgroundWorker();
             this.dataGridResult = new System.Windows.Forms.DataGridView();
-            this.fileInfoData1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fileInfoDataStreams = new CNRService.StreamsFinder.FileInfoData();
             this.statusStripInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelFoundItems = new System.Windows.Forms.ToolStripStatusLabel();
             this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
             this.contextMenuStripGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exportStreamToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelUsageInfo = new System.Windows.Forms.Label();
+            this.openDefaultStreamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.streamNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.streamSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.creationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileInfoData1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.fileInfoDataStreams = new CNRService.StreamsFinder.FileInfoData();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).BeginInit();
             this.statusStripInfo.SuspendLayout();
             this.contextMenuStripGrid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxFind
@@ -105,6 +107,18 @@ namespace CNRService.StreamsFinder
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(814, 112);
             this.panel1.TabIndex = 1;
+            // 
+            // labelUsageInfo
+            // 
+            this.labelUsageInfo.AutoSize = true;
+            this.labelUsageInfo.Location = new System.Drawing.Point(16, 96);
+            this.labelUsageInfo.Name = "labelUsageInfo";
+            this.labelUsageInfo.Size = new System.Drawing.Size(733, 13);
+            this.labelUsageInfo.TabIndex = 14;
+            this.labelUsageInfo.Text = "Press \'Ctrl+A\' to select all streams. Use the \'Del\' key to delete one or more sel" +
+    "ected streams, double click to open in hex editor. Right click for more actions." +
+    "";
+            this.labelUsageInfo.Visible = false;
             // 
             // linkLabelAbout
             // 
@@ -226,17 +240,6 @@ namespace CNRService.StreamsFinder
             this.dataGridResult.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridResult_UserDeletingRow);
             this.dataGridResult.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridResult_MouseUp);
             // 
-            // fileInfoData1BindingSource
-            // 
-            this.fileInfoData1BindingSource.DataSource = this.fileInfoDataStreams;
-            this.fileInfoData1BindingSource.Position = 0;
-            // 
-            // fileInfoDataStreams
-            // 
-            this.fileInfoDataStreams.DataSetName = "FileInfoData";
-            this.fileInfoDataStreams.Locale = new System.Globalization.CultureInfo("en-US");
-            this.fileInfoDataStreams.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // statusStripInfo
             // 
             this.statusStripInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -267,29 +270,35 @@ namespace CNRService.StreamsFinder
             // contextMenuStripGrid
             // 
             this.contextMenuStripGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportStreamToFileToolStripMenuItem});
+            this.exportStreamToFileToolStripMenuItem,
+            this.openDefaultStreamToolStripMenuItem,
+            this.openContainingFolderToolStripMenuItem});
             this.contextMenuStripGrid.Name = "contextMenuStripGrid";
-            this.contextMenuStripGrid.Size = new System.Drawing.Size(189, 26);
+            this.contextMenuStripGrid.Size = new System.Drawing.Size(198, 92);
             // 
             // exportStreamToFileToolStripMenuItem
             // 
             this.exportStreamToFileToolStripMenuItem.Image = global::CNRService.StreamsFinder.Properties.Resources._1306339539_export;
             this.exportStreamToFileToolStripMenuItem.Name = "exportStreamToFileToolStripMenuItem";
-            this.exportStreamToFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.exportStreamToFileToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.exportStreamToFileToolStripMenuItem.Text = "Export stream to file...";
             this.exportStreamToFileToolStripMenuItem.Click += new System.EventHandler(this.exportStreamToFileToolStripMenuItem_Click);
             // 
-            // labelUsageInfo
+            // openDefaultStreamToolStripMenuItem
             // 
-            this.labelUsageInfo.AutoSize = true;
-            this.labelUsageInfo.Location = new System.Drawing.Point(16, 96);
-            this.labelUsageInfo.Name = "labelUsageInfo";
-            this.labelUsageInfo.Size = new System.Drawing.Size(733, 13);
-            this.labelUsageInfo.TabIndex = 14;
-            this.labelUsageInfo.Text = "Press \'Ctrl+A\' to select all streams. Use the \'Del\' key to delete one or more sel" +
-                "ected streams, double click to open in hex editor. Right click for more actions." +
-                "";
-            this.labelUsageInfo.Visible = false;
+            this.openDefaultStreamToolStripMenuItem.Image = global::CNRService.StreamsFinder.Properties.Resources._1307470502_application_x_executable_script;
+            this.openDefaultStreamToolStripMenuItem.Name = "openDefaultStreamToolStripMenuItem";
+            this.openDefaultStreamToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.openDefaultStreamToolStripMenuItem.Text = "Open default stream";
+            this.openDefaultStreamToolStripMenuItem.Click += new System.EventHandler(this.openDefaultStreamToolStripMenuItem_Click);
+            // 
+            // openContainingFolderToolStripMenuItem
+            // 
+            this.openContainingFolderToolStripMenuItem.Image = global::CNRService.StreamsFinder.Properties.Resources._1307470595_Folder;
+            this.openContainingFolderToolStripMenuItem.Name = "openContainingFolderToolStripMenuItem";
+            this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.openContainingFolderToolStripMenuItem.Text = "Open containing folder";
+            this.openContainingFolderToolStripMenuItem.Click += new System.EventHandler(this.openContainingFolderToolStripMenuItem_Click);
             // 
             // fileNameDataGridViewTextBoxColumn
             // 
@@ -327,6 +336,17 @@ namespace CNRService.StreamsFinder
             this.creationDateDataGridViewTextBoxColumn.Name = "creationDateDataGridViewTextBoxColumn";
             this.creationDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // fileInfoData1BindingSource
+            // 
+            this.fileInfoData1BindingSource.DataSource = this.fileInfoDataStreams;
+            this.fileInfoData1BindingSource.Position = 0;
+            // 
+            // fileInfoDataStreams
+            // 
+            this.fileInfoDataStreams.DataSetName = "FileInfoData";
+            this.fileInfoDataStreams.Locale = new System.Globalization.CultureInfo("en-US");
+            this.fileInfoDataStreams.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // FindForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -343,11 +363,11 @@ namespace CNRService.StreamsFinder
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).EndInit();
             this.statusStripInfo.ResumeLayout(false);
             this.statusStripInfo.PerformLayout();
             this.contextMenuStripGrid.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoData1BindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileInfoDataStreams)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -374,5 +394,7 @@ namespace CNRService.StreamsFinder
         private DataGridViewTextBoxColumn streamSizeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn creationDateDataGridViewTextBoxColumn;
+        private ToolStripMenuItem openDefaultStreamToolStripMenuItem;
+        private ToolStripMenuItem openContainingFolderToolStripMenuItem;
     }
 }

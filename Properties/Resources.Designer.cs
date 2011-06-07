@@ -108,5 +108,19 @@ namespace CNRService.StreamsFinder.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap _1307470502_application_x_executable_script {
+            get {
+                object obj = ResourceManager.GetObject("1307470502_application-x-executable-script", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap _1307470595_Folder {
+            get {
+                object obj = ResourceManager.GetObject("1307470595_Folder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

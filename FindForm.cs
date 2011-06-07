@@ -28,6 +28,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Be.Windows.Forms;
+using System.Diagnostics;
 
 namespace CNRService.StreamsFinder
 {
@@ -77,20 +78,29 @@ namespace CNRService.StreamsFinder
             }
             else // Start search:
             {
-                foreach (DriveInfo drive in DriveInfo.GetDrives())
+                try
                 {
-                    if (textBoxFind.Text.Substring(0, 3).ToLower().Contains(drive.Name.ToLower()))
+                    foreach (DriveInfo drive in DriveInfo.GetDrives())
                     {
-                        if (!drive.DriveFormat.ToUpper().Equals("NTFS"))
+                        if (textBoxFind.Text.Substring(0, 3).ToLower().Contains(drive.Name.ToLower()))
                         {
-                            MessageBox.Show("The selected Drive \"" + drive.Name + "\" " + 
-                                "is formated with " + drive.DriveFormat + 
-                                ", you won't find any streams here.",
-                                "Wrong file system", MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
-                            return;
+                            if (!drive.DriveFormat.ToUpper().Equals("NTFS"))
+                            {
+                                MessageBox.Show("The selected Drive \"" + drive.Name + "\" " +
+                                    "is formated with " + drive.DriveFormat +
+                                    ", you won't find any streams here.",
+                                    "Wrong file system", MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                                return;
+                            }
                         }
                     }
+                }
+                catch (IOException ioe)
+                {
+                    MessageBox.Show(ioe.Message, "An error occurred",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
                 buttonFind.Text = "Stop search";
@@ -376,6 +386,30 @@ namespace CNRService.StreamsFinder
                     }
                 }
             }
+        }
+
+        private void openDefaultStreamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataRowView drv = dataGridResult.SelectedRows[0].DataBoundItem as DataRowView;
+            FileInfoData.FileInfoRow fir = drv.Row as FileInfoData.FileInfoRow;
+
+            try
+            {
+                Process.Start(fir.File_Name);
+            }
+            catch (System.ComponentModel.Win32Exception) { }
+        }
+
+        private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataRowView drv = dataGridResult.SelectedRows[0].DataBoundItem as DataRowView;
+            FileInfoData.FileInfoRow fir = drv.Row as FileInfoData.FileInfoRow;
+
+            try
+            {
+                Process.Start(fir.Location);
+            }
+            catch (System.ComponentModel.Win32Exception) { }
         }
     }
 }
