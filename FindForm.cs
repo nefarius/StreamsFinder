@@ -21,14 +21,20 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 //************************************************************************************
+
+/*
+ * Big parts of this project were rewritten by Benjamin Höglinger aka Nefarius
+ * 
+ */
+
 using System;
 using System.Collections;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Be.Windows.Forms;
-using System.Diagnostics;
 
 namespace CNRService.StreamsFinder
 {
