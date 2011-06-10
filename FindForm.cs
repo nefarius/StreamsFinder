@@ -117,6 +117,11 @@ namespace CNRService.StreamsFinder
             }
         }
 
+        /// <summary>
+        /// Scans a given directory for alternate data streams.
+        /// </summary>
+        /// <param name="sDir">The directory root.</param>
+        /// <param name="subFolders">Scan subdirectories recursive?</param>
         private void DirSearch(string sDir, bool subFolders)
         {
             try
@@ -203,12 +208,12 @@ namespace CNRService.StreamsFinder
         /// <summary>
         /// Thread-safe report call.
         /// </summary>
-        /// <param name="dirname"></param>
+        /// <param name="dirname">The path (name) of the current directory.</param>
         private delegate void ReportDirNameCallback(String dirname);
         /// <summary>
         /// Updates the current directory display label.
         /// </summary>
-        /// <param name="dirname"></param>
+        /// <param name="dirname">The path (name) of the current directory.</param>
         private void ReportDirName(string dirname)
         {
             if (labelCurrentDirectory.InvokeRequired)
@@ -388,6 +393,11 @@ namespace CNRService.StreamsFinder
             }
         }
 
+        /// <summary>
+        /// Executes or opens the selected file with the default application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openDefaultStreamToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataRowView drv = dataGridResult.SelectedRows[0].DataBoundItem as DataRowView;
@@ -400,6 +410,11 @@ namespace CNRService.StreamsFinder
             catch (System.ComponentModel.Win32Exception) { }
         }
 
+        /// <summary>
+        /// Opens the containing folder of the file's location.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataRowView drv = dataGridResult.SelectedRows[0].DataBoundItem as DataRowView;
